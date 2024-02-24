@@ -133,3 +133,90 @@ function obtenerDiasSeleccionados() {
 function obtenerHora(hora) {
     return hora.trim();
 }
+
+function descargarHorario() {
+    // Obtener la tabla por su id
+    var tabla = document.getElementById('miHorario');
+
+    // Obtener el enlace al archivo style.css
+    var linkCSS = document.querySelector('link[rel="stylesheet"]').getAttribute('href');
+
+    // Crear un objeto Promise para cargar el contenido de style.css
+    var promise = new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', linkCSS);
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                resolve(xhr.responseText);
+            } else {
+                reject(new Error('Error al cargar styles.css'));
+            }
+        };
+        xhr.send();
+    });
+
+    // Cuando la promesa se resuelve, se ejecuta la siguiente parte del código
+    promise.then(function (styleContent) {
+        // Agregar el contenido del estilo al contenido de la tabla
+        var contenidoCompleto = '<style>' + styleContent + '</style>' + tabla.outerHTML;
+
+        // Crear un objeto Blob (Binary Large Object) con el contenido del texto
+        var blob = new Blob([contenidoCompleto], { type: 'text/html' });
+
+        // Crear un enlace para la descarga
+        var enlaceDescarga = document.createElement('a');
+        enlaceDescarga.href = window.URL.createObjectURL(blob);
+
+        // Asignar el nombre del archivo
+        enlaceDescarga.download = 'horario_con_estilo.html';
+        descargarHorarioComoImagen();
+        // Simular un clic en el enlace para iniciar la descarga
+        enlaceDescarga.click();
+    }).catch(function (error) {
+        console.error(error);
+    });
+}
+function descargarHorarioComoImagen() {
+    // Obtener el ancho y alto actual de la tabla
+    var anchoTabla = document.getElementById('miHorario').scrollWidth;
+    var altoTabla = document.getElementById('miHorario').scrollHeight;
+
+    // Verificar si es un dispositivo móvil (ancho de la ventana menor que 768 píxeles)
+    var esDispositivoMovil = window.innerWidth < 768;
+
+    // Configurar las opciones para html2canvas según el dispositivo
+    var opcionesHtml2Canvas = {
+        width: esDispositivoMovil ? anchoTabla : null, // Si es dispositivo móvil, ajustar el ancho al ancho de la tabla
+        height: esDispositivoMovil ? altoTabla : null, // Si es dispositivo móvil, ajustar la altura al alto de la tabla
+        scale: 2, // Ajustar la resolución (puedes aumentar o disminuir según sea necesario)
+        logging: true, // Habilitar el registro para ver si hay mensajes de error
+        allowTaint: true,
+        useCORS: true,
+        backgroundColor: null, // Puedes establecer un color de fondo si es necesario
+        imageTimeout: 0, // Deshabilitar el tiempo de espera para las imágenes
+        quality: 2, // Ajustar la calidad de la imagen (puedes ajustar según sea necesario)
+    };
+
+    // Utilizar html2canvas con las opciones configuradas
+    html2canvas(document.getElementById('miHorario'), opcionesHtml2Canvas).then(function (canvas) {
+        // Crear un enlace para la descarga
+        var enlaceDescarga = document.createElement('a');
+
+        // Convertir el canvas a una URL de datos (data URL)
+        var imagenURL = canvas.toDataURL('image/png');
+
+        // Asignar la URL de la imagen al enlace de descarga
+        enlaceDescarga.href = imagenURL;
+
+        // Asignar el nombre del archivo
+        enlaceDescarga.download = 'horario_con_estilo.png';
+
+        // Simular un clic en el enlace para iniciar la descarga
+        enlaceDescarga.click();
+    });
+}
+
+
+
+
+

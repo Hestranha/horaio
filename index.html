@@ -8,6 +8,8 @@
     <!-- Alertas -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.all.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
   </head>
   <body>
     <div class="container">
@@ -59,10 +61,13 @@
           <button class="agregar" type="button" onclick="agregarCurso()">
             Agregar
           </button>
+          <button class="descargar" type="button" onclick="descargarHorarioComoImagen()">
+            Descargar
+          </button>
         </div>
       </form>
       <div id="horario-mostrado">
-        <table>
+        <table id="miHorario">
           <thead>
             <tr>
               <th></th>
@@ -71,7 +76,7 @@
               <th>Miércoles</th>
               <th>Jueves</th>
               <th>Viernes</th>
-              <th>Sabado</th>
+              <th>Sábado</th>
               <th>Domingo</th>
             </tr>
           </thead>

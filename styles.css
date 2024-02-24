@@ -35,13 +35,19 @@ table {
 
 th,
 td {
-    border: 1px solid #ddd;
+    border: 1px solid #2e2e2e;
     padding: 5px;
     text-align: center;
 }
 
 th {
-    background-color: #f2f2f2;
+    background-color: #000000;
+    color:#ffffff;
+    width: 200px
+}
+
+td {
+    background-color: #ffffff;
     width: 200px
 }
 
@@ -169,6 +175,21 @@ th {
     background-color: #45a049;
 }
 
+.descargar{
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4c7faf;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    margin-bottom:20px;
+}
+
+.descargar:hover {
+    background-color: #5345a0;
+}
 
 .contenedor-1{
     display: flex;
