@@ -70,18 +70,25 @@
             Descargar
           </button>
           <button class="borrar" type="button" onclick="borrarCurso()">
-            Borrar
+            Cursos
           </button>
         </div>
       </form>
       <div id="ventanaEmergente" class="modal">
         <div class="modal-contenido">
             <div class="botones-ajustes">
-                <button class="confirmarBorrarCurso" type="button" onclick="confirmarBorrarCurso()">Borrar Cursos</button>
-                <button class="cerrarBorrarCurso" onclick="cerrarVentanaEmergente()">Salir</button>
+                <div class="seleccion">
+                  <p>todos</p>
+                  <input class="borrar-checkbox" type="checkbox" id="borrarTodos" required />
+                </div>
+                <div class="opciones-botones">
+                  <button class="confirmarBorrarCurso" type="button" onclick="confirmarBorrarCurso()">Borrar Cursos</button>
+                  <button class="cerrarBorrarCurso" onclick="cerrarVentanaEmergente()">Salir</button>
+                </div>
+                
             </div>
             <hr>
-          <div class="cursos-borrar" id="infoCursos"></div>
+          <div class="cursos-borrar infoCursos" id="infoCursos"></div>
         </div>
       </div>
       <div id="horario-mostrado">
@@ -110,7 +117,7 @@
               <td id="f1-7"></td>
             </tr>
             <tr id="2">
-              <th id="f2">08:00 - 08:50</th>
+              <th id="f2">07:50 - 08:50</th>
               <td id="f2-1"></td>
               <td id="f2-2"></td>
               <td id="f2-3"></td>

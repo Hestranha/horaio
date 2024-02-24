@@ -1,4 +1,24 @@
 generarColorPastel();
+//***************************************************************
+//***************************************************************
+//***************************************************************
+//***************************************************************
+// Obtén la referencia al checkbox "borrarTodos"
+var checkboxBorrarTodos = document.getElementById('borrarTodos');
+// Agrega un evento de cambio al checkbox "borrarTodos"
+checkboxBorrarTodos.addEventListener('change', function() {
+    // Obtén todos los checkboxes dentro de .infoCursos
+    var checkboxesInfoCursos = document.querySelectorAll('.infoCursos input[type="checkbox"]');
+    
+    // Recorre todos los checkboxes y establece su propiedad checked según el estado del checkbox "borrarTodos"
+    checkboxesInfoCursos.forEach(function(checkbox) {
+        checkbox.checked = checkboxBorrarTodos.checked;
+    });
+});
+//***************************************************************
+//***************************************************************
+//***************************************************************
+//***************************************************************
 function generarColorPastel() {
     // Generar componentes de color RGB para un color pastel
     var r = Math.floor(Math.random() * 100) + 155; // Rojo en el rango 155-255
@@ -18,6 +38,7 @@ var contieneSeisO7;
 var idsCumplidos = [];
 var cursos = [];
 let indice = 1;
+var estado = [];
 function agregarCurso() {
     // Obtener los valores del formulario
     const nombreCurso = document.getElementById('nombre-curso').value;
@@ -25,7 +46,15 @@ function agregarCurso() {
     const horaInicio = obtenerHora(document.getElementById('hora-inicio').value);
     const horaFin = obtenerHora(document.getElementById('hora-fin').value);
     var colorSeleccionado = document.getElementById('color').value;
-
+    if(nombreCurso == '' && diasSeleccionados.length == 0 && horaInicio == '' && horaFin == ''){
+        Swal.fire({
+            title: 'Campos incompletos',
+            text: 'Debe llenar la información de un curso',
+            icon: 'warning',
+            confirmButtonText: 'Aceptar'
+        });
+        return 0;
+    }
     if (validacion() == 0) {
         return;
     }
@@ -33,8 +62,8 @@ function agregarCurso() {
 
     var filas = document.getElementById('horario-mostrado').getElementsByTagName('tr');
 
-    //var ultimaHoraMenorInicio = '';
-    //var ultimaHoraMenorFin = '';
+    var ultimaHoraMenorInicio = '';
+    var ultimaHoraMenorFin = '';
 
     for (var i = 1; i < filas.length; i++) {
         // Obtener la hora de inicio de la fila actual (asumiendo que está en el formato hh:mm)
@@ -42,25 +71,29 @@ function agregarCurso() {
         // Obtener la hora de fin de la fila actual (asumiendo que está en el formato hh:mm)
         var horaFilaFin = filas[i].querySelector('th').innerText.split(' - ')[1];
         // Verificar si la hora de inicio o la hora de fin está dentro del rango
-        if (horaFilaFin >= horaInicio && horaFilaInicio <= horaFin) {
+        if (horaFilaFin > horaInicio && horaFilaInicio <= horaFin) {
             // Asignar la última hora menor que la hora de inicio y fin proporcionadas
-            /*
+            console.log('----------' ,horaFilaInicio);
             if (horaFilaInicio < horaInicio) {
                 ultimaHoraMenorInicio = horaFilaInicio;
+                console.log('Ultima hora MENOR: ',ultimaHoraMenorInicio);
             }
             if (horaFilaFin < horaFin) {
                 ultimaHoraMenorFin = horaFilaFin;
-            }
-question    */
+                console.log('Ultima hora MAYOR:',ultimaHoraMenorFin);
+            } 
             // Agregar la fila actual al array idsCumplidos
             //console.log(filas[i].querySelector('th').id);
             idsCumplidos.push(filas[i].querySelector('th').id);
+            if (horaFilaFin == horaFin) {
+                break;
+            }
         }
     }
-    console.log('id maximo: ', idsCumplidos);
+    //console.log('id maximo: ', idsCumplidos);
     // Crear un array para almacenar los resultados finales
     var resultados = [];
-
+    // console.log(resultados);
     // Bucle externo para iterar sobre los IDs cumplidos
     for (var i = 0; i < idsCumplidos.length; i++) {
         var idCumplido = idsCumplidos[i];
@@ -76,7 +109,7 @@ question    */
     }
 
     // Imprimir los resultados en la consola
-    console.log("Resultados:", resultados);
+    // console.log("Resultados:", resultados);
     var nuevoCurso = {
         "id": indice,
         "nombre": nombreCurso,
@@ -119,12 +152,12 @@ question    */
     //ultimoValor = idsCumplidos[longitudArray - 1].replace('f', '');
     //console.log(ultimoValor);
     //console.log('valor final: ', ultimoValor);
-
-    contieneSeisO7 = diasSeleccionados.includes(6) || diasSeleccionados.includes(7); // true o false
+    console.log(diasSeleccionados);
+    contieneSeisO7 = diasSeleccionados.includes('6') || diasSeleccionados.includes('7'); // true o false
     //console.log(contieneSeisO7);
 
     idsCumplidos.splice(0, idsCumplidos.length);
-    resultados.splice(0, resultados.length);
+    //resultados.splice(0, resultados.length);
     //limpiar
     //document.getElementById('nombre-curso').value = "";
 
@@ -149,6 +182,15 @@ var cursos = {
 */
 //borrarCurso();
 function borrarCurso() {
+    if (cursos.length == 0){
+        Swal.fire({
+            title: 'te falla no?',
+            text: 'No hay ningún curso',
+            icon: 'question',
+            confirmButtonText: 'Aceptar'
+        });
+        return;
+    }
     let ventanaEmergente = document.getElementById('ventanaEmergente');
     ventanaEmergente.style.display = 'flex';
     document.body.style.overflow = 'hidden';
@@ -195,20 +237,54 @@ function cerrarVentanaEmergente() {
 }
 
 function confirmarBorrarCurso() {
-    let checkboxes = document.querySelectorAll('.borrar-checkbox');
-    let cursosSeleccionados = [];
-
-    checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function () {
-            if (this.checked) {
-                cursosSeleccionados.push(this.value);
-            } else {
-                cursosSeleccionados = cursosSeleccionados.filter(id => id !== this.value);
-            }
-        });
-    });
+    const checkboxes = document.querySelectorAll('.infoCursos input[type="checkbox"]');
+    let cursosSeleccionados = Array.from(checkboxes)
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value);
     console.log(cursosSeleccionados);
+    if (cursosSeleccionados.length > 0) {
+        for (let i = 0; i < cursosSeleccionados.length; i++) {
+            let cursoId = cursosSeleccionados[i];
+            let index = cursos.findIndex(curso => curso.id === parseInt(cursoId));
+
+            if (index !== -1) {
+                let cursoEncontrado = cursos[index];
+                //console.log(`Celdas del curso con ID ${cursoId}:`, cursoEncontrado.celdas);
+
+                // Iterar sobre los IDs de las celdas y borrar su contenido
+                cursoEncontrado.celdas.forEach(celdaId => {
+                    let celda = document.getElementById(celdaId);
+                    if (celda) {
+                        celda.textContent = '';
+                        celda.style.backgroundColor = '#ffffff';
+                    }
+                });
+
+                // Borrar el curso del array 'cursos'
+                cursos.splice(index, 1);
+                //console.log(`Curso con ID ${cursoId} eliminado.`);
+            } else {
+                console.log(`No se encontró el curso con ID ${cursoId}`);
+            }
+        }
+        cerrarVentanaEmergente();
+        Swal.fire({
+            title: 'Listo',
+            text: 'Se borro exitosamente',
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+        });
+    } else {
+        Swal.fire({
+            title: '',
+            text: 'Debe seleccionar al menos un curso',
+            icon: 'info',
+            confirmButtonText: 'Aceptar'
+        });
+    }
+
 }
+
 
 function validacion() {
     const nombreCurso = document.getElementById('nombre-curso').value;
@@ -217,7 +293,7 @@ function validacion() {
     const horaFin = obtenerHora(document.getElementById('hora-fin').value);
     if (nombreCurso == '') {
         Swal.fire({
-            title: 'Advertencia',
+            title: 'Insuficiente',
             text: 'Complete el nombre del Curso',
             icon: 'warning',
             confirmButtonText: 'Aceptar'
@@ -226,7 +302,7 @@ function validacion() {
     }
     if (diasSeleccionados.length == 0) {
         Swal.fire({
-            title: 'Advertencia',
+            title: 'Insuficiente',
             text: 'Seleccione al menos un día',
             icon: 'warning',
             confirmButtonText: 'Aceptar'
@@ -235,7 +311,7 @@ function validacion() {
     }
     if (horaInicio == '') {
         Swal.fire({
-            title: 'Advertencia',
+            title: 'Insuficiente',
             text: 'Especifique la hora de Inicio',
             icon: 'warning',
             confirmButtonText: 'Aceptar'
@@ -244,7 +320,7 @@ function validacion() {
     }
     if (horaFin == '') {
         Swal.fire({
-            title: 'Advertencia',
+            title: 'Insuficiente',
             text: 'Especifique la hora de Fin',
             icon: 'warning',
             confirmButtonText: 'Aceptar'
@@ -292,7 +368,7 @@ function descargarHorario() {
     }
     Swal.fire({
         title: 'Advertencia',
-        text: 'El contenido se reiniciará',
+        text: 'Luego de descargar el contenido se reiniciará',
         icon: 'warning',
         showCancelButton: true,  // Habilitar botón de cancelar
         confirmButtonText: 'Aceptar',
@@ -342,7 +418,7 @@ function descargarHorario() {
         var opcionesHtml2Canvas = {
             width: esDispositivoMovil ? anchoTabla : null, // Si es dispositivo móvil, ajustar el ancho al ancho de la tabla
             height: esDispositivoMovil ? altoTabla : null, // Si es dispositivo móvil, ajustar la altura al alto de la tabla
-            scale: 2, // Ajustar la resolución (puedes aumentar o disminuir según sea necesario)
+            scale: 1.5, // Ajustar la resolución (puedes aumentar o disminuir según sea necesario)
             logging: true, // Habilitar el registro para ver si hay mensajes de error
             allowTaint: true,
             useCORS: true,

@@ -5,6 +5,45 @@ body {
     background-color: #f4f4f4;
 }
 
+/* Firefox (uncomment to work in Firefox, although other properties will not work!)  */
+/** {
+  scrollbar-width: thin;
+  scrollbar-color: #000975 #DFE9EB;
+}*/
+
+/* Chrome, Edge and Safari */
+*::-webkit-scrollbar {
+    height: 9px;
+    width: 9px;
+}
+
+*::-webkit-scrollbar-track {
+    border-radius: 2px;
+    background-color: #DFE9EB;
+}
+
+*::-webkit-scrollbar-track:hover {
+    background-color: #DFE9EB;
+}
+
+*::-webkit-scrollbar-track:active {
+    background-color: #DFE9EB;
+}
+
+*::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background-color: #000975;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background-color: #8D20B7;
+}
+
+*::-webkit-scrollbar-thumb:active {
+    background-color: #000975;
+}
+
+
 .container {
     max-width: 80%;
     margin: 50px auto;
@@ -42,7 +81,7 @@ td {
 
 th {
     background-color: #000000;
-    color:#ffffff;
+    color: #ffffff;
     width: 200px
 }
 
@@ -83,14 +122,16 @@ td {
     color: #333;
 }
 
-.style-dias{
+.style-dias {
     margin-left: 10px;
     margin-right: 10px;
 }
-.style-color{
+
+.style-color {
     margin-left: 10px;
     margin-right: 10px;
 }
+
 .days-checkbox {
     display: flex;
     gap: 10px;
@@ -117,6 +158,7 @@ td {
     background-color: #52c76b;
     color: white;
 }
+
 /*************************/
 /*************************/
 /*************************/
@@ -129,7 +171,8 @@ td {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro translúcido */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Fondo oscuro translúcido */
 }
 
 .modal-contenido {
@@ -146,25 +189,29 @@ td {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-.m-nombre-curso{
+.m-nombre-curso {
     font-size: 20px;
     color: #333;
     margin: 0px;
 }
-.xd{
+
+.xd {
     display: flex;
     justify-content: end;
 }
-.borrar-checkbox{
+
+.borrar-checkbox {
     width: 30px;
     height: 30px;
 }
-.container-curso{
+
+.container-curso {
     display: flex;
     width: 100%;
     flex-direction: column;
     padding: 10px 0px;
 }
+
 /*************************/
 /*************************/
 /*************************/
@@ -210,6 +257,7 @@ td {
     border-radius: 5px;
     outline: none;
 }
+
 /*************************/
 /*************************/
 /*************************/
@@ -222,14 +270,14 @@ td {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-bottom:20px;
+    margin-bottom: 20px;
 }
 
 .agregar:hover {
     background-color: #45a049;
 }
 
-.descargar{
+.descargar {
     padding: 10px 20px;
     font-size: 16px;
     background-color: #4c7faf;
@@ -238,7 +286,7 @@ td {
     border-radius: 5px;
     cursor: pointer;
     margin-left: 10px;
-    margin-bottom:20px;
+    margin-bottom: 20px;
 }
 
 .descargar:hover {
@@ -248,23 +296,25 @@ td {
 .borrar {
     padding: 10px 20px;
     font-size: 16px;
-    background-color: #ce3232;
+    background-color: #aa32ce;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     margin-left: 10px;
-    margin-bottom:20px;
+    margin-bottom: 20px;
 }
 
 .borrar:hover {
-    background-color: #a52727;
+    background-color: #a127a5;
 }
-.botones-ajustes{
+
+.botones-ajustes {
     display: flex;
     flex-direction: wrap;
-    justify-content: end;
+    justify-content: space-between;
 }
+
 .cerrarBorrarCurso {
     display: flex;
     justify-content: flex-end;
@@ -293,42 +343,64 @@ td {
     border-radius: 5px;
     cursor: pointer;
 }
+.opciones-botones{
+    display: flex;
+    flex-direction: wrap;
+    align-items: center;
+}
+.seleccion{
+    display: flex;
+    flex-direction: wrap;
+    align-items: center;
+}
+
+.seleccion p{
+    margin: 0px;
+    padding: 0px;
+}
 
 .confirmarBorrarCurso:hover {
     background-color: #a52727;
 }
+
 /*************************/
 /*************************/
 /*************************/
 /*************************/
-.contenedor-1{
+.contenedor-1 {
     display: flex;
     justify-content: center;
     flex-direction: wrap;
 }
-.contenedor-2{
+
+.contenedor-2 {
     display: flex;
     justify-content: center;
     flex-direction: wrap;
 }
-.contenedor-3{
+
+.contenedor-3 {
     display: flex;
     justify-content: center;
 }
 
 @media screen and (max-width: 768px) {
-    .style-dias{
+    .style-dias {
         margin-left: 0px;
     }
-    .style-color{
+
+    .style-color {
         margin-left: 0px;
     }
-    .contenedor-1{
+
+    .contenedor-1 {
         flex-direction: column;
     }
-    .contenedor-2{
+
+    .contenedor-2 {
         flex-direction: column;
     }
+
     .modal-contenido {
         width: 80%;
     }
