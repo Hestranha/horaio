@@ -4,15 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles.css" />
-    <link rel="icon" href="hora.png" type="image/png">
-    <link rel="icon" sizes="192x192" href="hora_192.png">
+    <link rel="icon" href="hora.png" type="image/png" />
+    <link rel="icon" sizes="192x192" href="hora_192.png" />
     <title>Horario</title>
     <!-- Alertas -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css"/>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css"
+    />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.all.min.js"></script>
     <!-- html a png -->
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-
   </head>
   <body>
     <div class="container">
@@ -67,8 +69,21 @@
           <button class="descargar" type="button" onclick="descargarHorario()">
             Descargar
           </button>
+          <button class="borrar" type="button" onclick="borrarCurso()">
+            Borrar
+          </button>
         </div>
       </form>
+      <div id="ventanaEmergente" class="modal">
+        <div class="modal-contenido">
+            <div class="botones-ajustes">
+                <button class="confirmarBorrarCurso" type="button" onclick="confirmarBorrarCurso()">Borrar Cursos</button>
+                <button class="cerrarBorrarCurso" onclick="cerrarVentanaEmergente()">Salir</button>
+            </div>
+            <hr>
+          <div class="cursos-borrar" id="infoCursos"></div>
+        </div>
+      </div>
       <div id="horario-mostrado">
         <table id="miHorario">
           <thead>
