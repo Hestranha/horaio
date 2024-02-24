@@ -1,6 +1,9 @@
 const colorInput = document.getElementById('color');
 colorInput.value = '#ffffff';
 
+var ultimoValor;
+var contieneSeisO7;
+
 function agregarCurso() {
     // Obtener los valores del formulario
     const nombreCurso = document.getElementById('nombre-curso').value;
@@ -9,53 +12,7 @@ function agregarCurso() {
     const horaFin = obtenerHora(document.getElementById('hora-fin').value);
     var colorSeleccionado = document.getElementById('color').value;
 
-    // Validaciones
-    if (nombreCurso == '') {
-        Swal.fire({
-            title: 'Advertencia',
-            text: 'Complete el nombre del Curso',
-            icon: 'warning',
-            confirmButtonText: 'Aceptar'
-        });
-        return;
-    }
-    if (diasSeleccionados.length == 0) {
-        Swal.fire({
-            title: 'Advertencia',
-            text: 'Seleccione al menos un día',
-            icon: 'warning',
-            confirmButtonText: 'Aceptar'
-        });
-        return;
-    }
-    if (horaInicio == '') {
-        Swal.fire({
-            title: 'Advertencia',
-            text: 'Especifique la hora de Inicio',
-            icon: 'warning',
-            confirmButtonText: 'Aceptar'
-        });
-        return;
-    }
-    if (horaFin == '') {
-        Swal.fire({
-            title: 'Advertencia',
-            text: 'Especifique la hora de Fin',
-            icon: 'warning',
-            confirmButtonText: 'Aceptar'
-        });
-        return;
-    }
-    console.log(horaInicio, horaFin);
-    const minutosInicio = parseInt(horaInicio.split(':')[0], 10) * 60 + parseInt(horaInicio.split(':')[1], 10);
-    const minutosFin = parseInt(horaFin.split(':')[0], 10) * 60 + parseInt(horaFin.split(':')[1], 10);
-    if (minutosFin < minutosInicio) {
-        Swal.fire({
-            title: 'Advertencia',
-            text: 'La hora Fin es menor que hora Inicio',
-            icon: 'warning',
-            confirmButtonText: 'Aceptar'
-        });
+    if (validacion() == 0) {
         return;
     }
 
@@ -81,7 +38,7 @@ function agregarCurso() {
             }
         }
     }
-
+    console.log('id maximo: ', idsCumplidos);
     // Crear un array para almacenar los resultados finales
     var resultados = [];
 
@@ -116,8 +73,67 @@ function agregarCurso() {
         }
     }
 
-}
+    var longitudArray = idsCumplidos.length;
 
+    ultimoValor = idsCumplidos[longitudArray - 1].replace('f', ''); // ultima Fila
+    console.log(ultimoValor);
+    contieneSeisO7 = diasSeleccionados.includes(6) || diasSeleccionados.includes(7); // true o false
+    console.log(contieneSeisO7);
+}
+function validacion() {
+    const nombreCurso = document.getElementById('nombre-curso').value;
+    const diasSeleccionados = obtenerDiasSeleccionados();
+    const horaInicio = obtenerHora(document.getElementById('hora-inicio').value);
+    const horaFin = obtenerHora(document.getElementById('hora-fin').value);
+    if (nombreCurso == '') {
+        Swal.fire({
+            title: 'Advertencia',
+            text: 'Complete el nombre del Curso',
+            icon: 'warning',
+            confirmButtonText: 'Aceptar'
+        });
+        return 0;
+    }
+    if (diasSeleccionados.length == 0) {
+        Swal.fire({
+            title: 'Advertencia',
+            text: 'Seleccione al menos un día',
+            icon: 'warning',
+            confirmButtonText: 'Aceptar'
+        });
+        return 0;
+    }
+    if (horaInicio == '') {
+        Swal.fire({
+            title: 'Advertencia',
+            text: 'Especifique la hora de Inicio',
+            icon: 'warning',
+            confirmButtonText: 'Aceptar'
+        });
+        return 0;
+    }
+    if (horaFin == '') {
+        Swal.fire({
+            title: 'Advertencia',
+            text: 'Especifique la hora de Fin',
+            icon: 'warning',
+            confirmButtonText: 'Aceptar'
+        });
+        return 0;
+    }
+    const minutosInicio = parseInt(horaInicio.split(':')[0], 10) * 60 + parseInt(horaInicio.split(':')[1], 10);
+    const minutosFin = parseInt(horaFin.split(':')[0], 10) * 60 + parseInt(horaFin.split(':')[1], 10);
+    if (minutosFin < minutosInicio) {
+        Swal.fire({
+            title: 'Advertencia',
+            text: 'La hora Fin es menor que hora Inicio',
+            icon: 'warning',
+            confirmButtonText: 'Aceptar'
+        });
+        return 0;
+    }
+    return 1;
+}
 function obtenerDiasSeleccionados() {
     // Obtener todos los elementos checkbox de días
     const checkboxes = document.querySelectorAll('input[name="days"]:checked');
@@ -135,48 +151,38 @@ function obtenerHora(hora) {
 }
 
 function descargarHorario() {
-    // Obtener la tabla por su id
-    var tabla = document.getElementById('miHorario');
-
-    // Obtener el enlace al archivo style.css
-    var linkCSS = document.querySelector('link[rel="stylesheet"]').getAttribute('href');
-
-    // Crear un objeto Promise para cargar el contenido de style.css
-    var promise = new Promise(function (resolve, reject) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', linkCSS);
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                resolve(xhr.responseText);
-            } else {
-                reject(new Error('Error al cargar styles.css'));
+    if (validacion() == 0) {
+        return;
+    }
+    var numeroUltimoValor = parseInt(ultimoValor, 10);  // 10 es la base numérica
+    numeroUltimoValor += 1;
+    console.log(typeof numeroUltimoValor);
+    for (var i = numeroUltimoValor; i <= 15; i++) {
+        var elemento = document.getElementById(i.toString());
+        console.log('aaaaaaaaaaaa');
+        if (elemento) {
+            elemento.style.display = 'none';
+        }
+    }
+    if (!contieneSeisO7) {
+        // Ocultar elementos con IDs que contienen 'f6' o 'f7'
+        for (var i = 6; i <= 7; i++) {
+            for (var j = 1; j <= 15; j++) {
+                var elemento = document.getElementById('f' + j + '-' + i);
+                if (elemento) {
+                    elemento.style.display = 'none';
+                }
             }
-        };
-        xhr.send();
-    });
-
-    // Cuando la promesa se resuelve, se ejecuta la siguiente parte del código
-    promise.then(function (styleContent) {
-        // Agregar el contenido del estilo al contenido de la tabla
-        var contenidoCompleto = '<style>' + styleContent + '</style>' + tabla.outerHTML;
-
-        // Crear un objeto Blob (Binary Large Object) con el contenido del texto
-        var blob = new Blob([contenidoCompleto], { type: 'text/html' });
-
-        // Crear un enlace para la descarga
-        var enlaceDescarga = document.createElement('a');
-        enlaceDescarga.href = window.URL.createObjectURL(blob);
-
-        // Asignar el nombre del archivo
-        enlaceDescarga.download = 'horario_con_estilo.html';
-        descargarHorarioComoImagen();
-        // Simular un clic en el enlace para iniciar la descarga
-        enlaceDescarga.click();
-    }).catch(function (error) {
-        console.error(error);
-    });
-}
-function descargarHorarioComoImagen() {
+        }
+        var elemento = document.getElementById('s6');
+        if (elemento) {
+            elemento.style.display = 'none';
+        }
+        var elemento = document.getElementById('d7');
+        if (elemento) {
+            elemento.style.display = 'none';
+        }
+    }
     // Obtener el ancho y alto actual de la tabla
     var anchoTabla = document.getElementById('miHorario').scrollWidth;
     var altoTabla = document.getElementById('miHorario').scrollHeight;
@@ -213,7 +219,9 @@ function descargarHorarioComoImagen() {
 
         // Simular un clic en el enlace para iniciar la descarga
         enlaceDescarga.click();
+        location.reload();
     });
+    
 }
 
 
