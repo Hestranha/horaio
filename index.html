@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Horario</title>
+    <!-- Alertas -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.all.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="titulo">Generador de Horarios</h1>
+      <form id="cronograma-form">
+        <div class="contenedor-1">
+          <div class="container-nombre-curso">
+            <label style="margin-right: 10px" for="nombre-curso"
+              >Nombre del Curso:</label
+            >
+            <input type="text" id="nombre-curso" required />
+          </div>
+          <div class="container-dias">
+            <label class="style-dias">Días:</label>
+            <div class="days-checkbox">
+              <input type="checkbox" id="lunes" name="days" value="1" />
+              <label for="lunes">L</label>
+              <input type="checkbox" id="martes" name="days" value="2" />
+              <label for="martes">M</label>
+              <input type="checkbox" id="miercoles" name="days" value="3" />
+              <label for="miercoles">W</label>
+              <input type="checkbox" id="jueves" name="days" value="4" />
+              <label for="jueves">J</label>
+              <input type="checkbox" id="viernes" name="days" value="5" />
+              <label for="viernes">V</label>
+              <input type="checkbox" id="sabado" name="days" value="6" />
+              <label for="sabado">S</label>
+              <input type="checkbox" id="domingo" name="days" value="7" />
+              <label for="domingo">D</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="contenedor-2">
+          <div class="container-hora">
+            <label style="margin-right: 10px" for="hora-inicio">Desde:</label>
+            <input type="time" id="hora-inicio" required />
+            <label style="margin-right: 10px; margin-left: 10px" for="hora-fin"
+              >Hasta:</label
+            >
+            <input type="time" id="hora-fin" required />
+          </div>
+          <div class="container-color">
+            <label class="style-color" for="color">Color:</label>
+            <input type="color" id="color" required />
+          </div>
+        </div>
+        <div class="contenedor-3">
+          <button class="agregar" type="button" onclick="agregarCurso()">
+            Agregar
+          </button>
+        </div>
+      </form>
+      <div id="horario-mostrado">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Lunes</th>
+              <th>Martes</th>
+              <th>Miércoles</th>
+              <th>Jueves</th>
+              <th>Viernes</th>
+              <th>Sabado</th>
+              <th>Domingo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th id="f1">07:00 - 07:50</th>
+              <td id="f1-1"></td>
+              <td id="f1-2"></td>
+              <td id="f1-3"></td>
+              <td id="f1-4"></td>
+              <td id="f1-5"></td>
+              <td id="f1-6"></td>
+              <td id="f1-7"></td>
+            </tr>
+            <tr>
+              <th id="f2">08:00 - 08:50</th>
+              <td id="f2-1"></td>
+              <td id="f2-2"></td>
+              <td id="f2-3"></td>
+              <td id="f2-4"></td>
+              <td id="f2-5"></td>
+              <td id="f2-6"></td>
+              <td id="f2-7"></td>
+            </tr>
+            <tr>
+              <th id="f3">09:00 - 10:50</th>
+              <td id="f3-1"></td>
+              <td id="f3-2"></td>
+              <td id="f3-3"></td>
+              <td id="f3-4"></td>
+              <td id="f3-5"></td>
+              <td id="f3-6"></td>
+              <td id="f3-7"></td>
+            </tr>
+            <tr>
+              <th id="f4">11:00 - 11:50</th>
+              <td id="f4-1"></td>
+              <td id="f4-2"></td>
+              <td id="f4-3"></td>
+              <td id="f4-4"></td>
+              <td id="f4-5"></td>
+              <td id="f4-6"></td>
+              <td id="f4-7"></td>
+            </tr>
+            <tr>
+              <th id="f5">12:00 - 12:50</th>
+              <td id="f5-1"></td>
+              <td id="f5-2"></td>
+              <td id="f5-3"></td>
+              <td id="f5-4"></td>
+              <td id="f5-5"></td>
+              <td id="f5-6"></td>
+              <td id="f5-7"></td>
+            </tr>
+            <tr>
+              <th id="f6">13:00 - 13:50</th>
+              <td id="f6-1"></td>
+              <td id="f6-2"></td>
+              <td id="f6-3"></td>
+              <td id="f6-4"></td>
+              <td id="f6-5"></td>
+              <td id="f6-6"></td>
+              <td id="f6-7"></td>
+            </tr>
+            <tr>
+              <th id="f7">14:00 - 14:50</th>
+              <td id="f7-1"></td>
+              <td id="f7-2"></td>
+              <td id="f7-3"></td>
+              <td id="f7-4"></td>
+              <td id="f7-5"></td>
+              <td id="f7-6"></td>
+              <td id="f7-7"></td>
+            </tr>
+            <tr>
+              <th id="f8">15:00 - 15:50</th>
+              <td id="f8-1"></td>
+              <td id="f8-2"></td>
+              <td id="f8-3"></td>
+              <td id="f8-4"></td>
+              <td id="f8-5"></td>
+              <td id="f8-6"></td>
+              <td id="f8-7"></td>
+            </tr>
+            <tr>
+              <th id="f9">16:00 - 16:50</th>
+              <td id="f9-1"></td>
+              <td id="f9-2"></td>
+              <td id="f9-3"></td>
+              <td id="f9-4"></td>
+              <td id="f9-5"></td>
+              <td id="f9-6"></td>
+              <td id="f9-7"></td>
+            </tr>
+            <tr>
+              <th id="f10">17:00 - 17:50</th>
+              <td id="f10-1"></td>
+              <td id="f10-2"></td>
+              <td id="f10-3"></td>
+              <td id="f10-4"></td>
+              <td id="f10-5"></td>
+              <td id="f10-6"></td>
+              <td id="f10-7"></td>
+            </tr>
+            <tr>
+              <th if="f11">18:00 - 18:50</th>
+              <td id="f11-1"></td>
+              <td id="f11-2"></td>
+              <td id="f11-3"></td>
+              <td id="f11-4"></td>
+              <td id="f11-5"></td>
+              <td id="f11-6"></td>
+              <td id="f11-7"></td>
+            </tr>
+            <tr>
+              <th id="f12">19:00 - 19:50</th>
+              <td id="f12-1"></td>
+              <td id="f12-2"></td>
+              <td id="f12-3"></td>
+              <td id="f12-4"></td>
+              <td id="f12-5"></td>
+              <td id="f12-6"></td>
+              <td id="f12-7"></td>
+            </tr>
+            <tr>
+              <th id="f13">20:00 - 20:50</th>
+              <td id="f13-1"></td>
+              <td id="f13-2"></td>
+              <td id="f13-3"></td>
+              <td id="f13-4"></td>
+              <td id="f13-5"></td>
+              <td id="f13-6"></td>
+              <td id="f13-7"></td>
+            </tr>
+            <tr>
+              <th id="f14">21:00 - 21:50</th>
+              <td id="f14-1"></td>
+              <td id="f14-2"></td>
+              <td id="f14-3"></td>
+              <td id="f14-4"></td>
+              <td id="f14-5"></td>
+              <td id="f14-6"></td>
+              <td id="f14-7"></td>
+            </tr>
+            <tr>
+              <th id="f15">22:00 - 22:50</th>
+              <td id="f15-1"></td>
+              <td id="f15-2"></td>
+              <td id="f15-3"></td>
+              <td id="f15-4"></td>
+              <td id="f15-5"></td>
+              <td id="f15-6"></td>
+              <td id="f15-7"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

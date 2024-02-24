@@ -1,0 +1,201 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 80%;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#horario-mostrado {
+    overflow-x: auto;
+    max-width: auto;
+}
+
+.titulo {
+    text-align: center;
+}
+
+.container-dias {
+    display: flex;
+    align-items: center;
+    flex-direction: wrap;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 5px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+    width: 200px
+}
+
+.container-nombre-curso {
+    display: flex;
+    align-items: center;
+    flex-direction: wrap;
+    margin-bottom: 20px;
+}
+
+.container-nombre-curso label {
+    font-size: 16px;
+    color: #333;
+}
+
+.container-nombre-curso input {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    width: 230px;
+}
+
+.container-dias {
+    display: flex;
+    flex-direction: wrap;
+    margin-bottom: 20px;
+}
+
+.container-dias label {
+    font-size: 16px;
+    color: #333;
+}
+
+.style-dias{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.style-color{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.days-checkbox {
+    display: flex;
+    gap: 10px;
+}
+
+.days-checkbox label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.days-checkbox input {
+    display: none;
+}
+
+.days-checkbox input:checked+label {
+    background-color: #52c76b;
+    color: white;
+}
+
+.container-hora {
+    display: flex;
+    align-items: center;
+    flex-direction: wrap;
+    margin-bottom: 20px;
+}
+
+.container-hora label {
+    font-size: 16px;
+    color: #333;
+}
+
+.container-hora input {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+.container-color {
+    display: flex;
+    align-items: center;
+    flex-direction: wrap;
+    margin-bottom: 20px;
+}
+
+.container-color label {
+    font-size: 16px;
+    color: #333;
+}
+
+.container-color input {
+    width: 30px;
+    height: 30px;
+
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+.agregar {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom:20px;
+}
+
+.agregar:hover {
+    background-color: #45a049;
+}
+
+
+.contenedor-1{
+    display: flex;
+    justify-content: center;
+    flex-direction: wrap;
+}
+.contenedor-2{
+    display: flex;
+    justify-content: center;
+    flex-direction: wrap;
+}
+.contenedor-3{
+    display: flex;
+    justify-content: center;
+}
+
+@media screen and (max-width: 768px) {
+    .style-dias{
+        margin-left: 0px;
+    }
+    .style-color{
+        margin-left: 0px;
+    }
+    .contenedor-1{
+        flex-direction: column;
+    }
+    .contenedor-2{
+        flex-direction: column;
+    }
+}
