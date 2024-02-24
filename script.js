@@ -79,6 +79,10 @@ function agregarCurso() {
     console.log(ultimoValor);
     contieneSeisO7 = diasSeleccionados.includes(6) || diasSeleccionados.includes(7); // true o false
     console.log(contieneSeisO7);
+    
+    //limpiar
+    document.getElementById('nombre-curso').value = "";
+
 }
 function validacion() {
     const nombreCurso = document.getElementById('nombre-curso').value;
