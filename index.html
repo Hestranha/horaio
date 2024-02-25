@@ -68,12 +68,14 @@
             <div class="container-horario">
               <label style="margin-right: 10px" for="horario-inicio">Inicio:</label>
               <input type="time" id="horario-inicio" required />
+              <!-- 
               <label style="margin-right: 10px; margin-left: 10px" for="horario-fin">Fin:</label>
-              <input type="time" id="horario-fin" required />
+              <input type="time" id="horario-fin" required /> 
+              -->
             </div>
             <div class="container-intervalo">
               <label style="margin-right: 10px" for="horario-intervalo">Intervalo (min):</label>
-              <input type="number" id="horario-intervalo" required step="10" min="30" value="30" max="50"/>
+              <input type="number" id="horario-intervalo" required step="10" min="30" value="30" max="60"/>
             </div>
             <button class="actualizarHorario" type="button" onclick="actualizarHorario()">Actualizar</button>
             <hr>
@@ -99,7 +101,7 @@
                   <input class="borrar-checkbox" type="checkbox" id="borrarTodos" required />
                 </div>
                 <div class="opciones-botones">
-                  <button class="confirmarBorrarCurso" type="button" onclick="confirmarBorrarCurso()">Borrar Cursos</button>
+                  <button class="confirmarBorrarCurso" type="button" onclick="confirmarBorrarCurso()">Borrar</button>
                   <button class="cerrarBorrarCurso" onclick="cerrarVentanaEmergente()">Salir</button>
                 </div>
                 

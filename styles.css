@@ -387,6 +387,8 @@ td {
 .container-horario {
     display: flex;
     align-items: center;
+    justify-content: center;
+    width: 100%;
     flex-direction: wrap;
     margin-bottom: 20px;
 }
@@ -510,10 +512,13 @@ td {
     }
 
     .container-horario {
-        flex-direction: column;
+        flex-direction: wrap;
+        align-items: center;
+        /*justify-content: start; */
     }
-
+    /*
     .detalles-content {
-        align-items: start;
+         align-items: start; 
     }
+    */
 }

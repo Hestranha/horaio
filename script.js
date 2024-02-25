@@ -54,7 +54,7 @@ function agregarCurso() {
     var colorSeleccionado = document.getElementById('color').value;
     if (nombreCurso == '' && diasSeleccionados.length == 0 && horaInicio == '' && horaFin == '') {
         Swal.fire({
-            title: 'Campos incompletos',
+            title: 'Datos incompletos',
             text: 'Debe llenar la información de un curso',
             icon: 'warning',
             confirmButtonText: 'Aceptar'
@@ -77,7 +77,7 @@ function agregarCurso() {
         // Obtener la hora de fin de la fila actual (asumiendo que está en el formato hh:mm)
         var horaFilaFin = filas[i].querySelector('th').innerText.split(' - ')[1];
         // Verificar si la hora de inicio o la hora de fin está dentro del rango
-        
+
         if (horaFilaFin > horaInicio && horaFilaInicio <= horaFin) {
             //console.log(`horaFilaFin > horaInicio &&  horaFilaInicio <= horaFin`);
             //console.log(` ${horaFilaFin} > ${horaInicio} &&  ${horaFilaInicio} <= ${horaFin}`);
@@ -121,16 +121,16 @@ function agregarCurso() {
         for (var i = 0; i < cursos.length; i++) {
             var cursoExistente = cursos[i];
             var celdasExistente = cursoExistente.celdas;
-    
+
             for (var j = 0; j < resultados.length; j++) {
                 if (celdasExistente.includes(resultados[j])) {
                     hayDuplicados = true;
                     break;
                 }
             }
-    
+
             if (hayDuplicados) {
-                console.log('¡Celdas duplicadas encontradas!');
+                //console.log('¡Celdas duplicadas encontradas!');
                 Swal.fire({
                     title: 'Error',
                     text: 'El curso interfiere con otro',
@@ -190,7 +190,7 @@ function agregarCurso() {
         contieneSeisO7 = diasSeleccionados.includes('6') || diasSeleccionados.includes('7'); // true o false
         //console.log(contieneSeisO7);
 
-        
+
         //resultados.splice(0, resultados.length);
         //limpiar
         //document.getElementById('nombre-curso').value = "";
@@ -301,7 +301,6 @@ function confirmarBorrarCurso() {
                         celda.style.backgroundColor = '#ffffff';
                     }
                 });
-
                 // Borrar el curso del array 'cursos'
                 cursos.splice(index, 1);
                 //console.log(`Curso con ID ${cursoId} eliminado.`);
@@ -383,9 +382,7 @@ function validacion() {
     return 1;
 }
 function obtenerDiasSeleccionados() {
-    // Obtener todos los elementos checkbox de días
-    const checkboxes = document.querySelectorAll('input[name="days"]:checked');
-    // Crear un array para almacenar los días seleccionados
+    const checkboxes = document.querySelectorAll('input[name="days"]:checked'); 
     const diasSeleccionados = [];
     // Iterar sobre los checkboxes y agregar los valores al array
     checkboxes.forEach((checkbox) => {
@@ -412,15 +409,15 @@ function descargarHorario() {
         title: 'Advertencia',
         text: 'Luego de descargar el contenido se reiniciará',
         icon: 'warning',
-        showCancelButton: true,  // Habilitar botón de cancelar
+        showCancelButton: true,
         confirmButtonText: 'Aceptar',
-        cancelButtonText: 'Cancelar'  // Texto para el botón de cancelar
+        cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (!result.isConfirmed) {
             console.log('Aceptar clicado');
             return;
         }
-        var numeroUltimoValor = parseInt(ultimoValor, 10);  // 10 es la base numérica
+        var numeroUltimoValor = parseInt(ultimoValor, 10); 
         numeroUltimoValor += 1;
         console.log(typeof numeroUltimoValor);
         for (var i = numeroUltimoValor; i <= 15; i++) {
@@ -449,24 +446,22 @@ function descargarHorario() {
                 elemento.style.display = 'none';
             }
         }
-        // Obtener el ancho y alto actual de la tabla
+        
         var anchoTabla = document.getElementById('miHorario').scrollWidth;
         var altoTabla = document.getElementById('miHorario').scrollHeight;
 
-        // Verificar si es un dispositivo móvil (ancho de la ventana menor que 768 píxeles)
         var esDispositivoMovil = window.innerWidth < 768;
 
-        // Configurar las opciones para html2canvas según el dispositivo
         var opcionesHtml2Canvas = {
-            width: esDispositivoMovil ? anchoTabla : null, // Si es dispositivo móvil, ajustar el ancho al ancho de la tabla
-            height: esDispositivoMovil ? altoTabla : null, // Si es dispositivo móvil, ajustar la altura al alto de la tabla
-            scale: 1.5, // Ajustar la resolución (puedes aumentar o disminuir según sea necesario)
-            logging: true, // Habilitar el registro para ver si hay mensajes de error
+            width: esDispositivoMovil ? anchoTabla : null, 
+            height: esDispositivoMovil ? altoTabla : null, 
+            scale: 1.5, 
+            logging: true, 
             allowTaint: true,
             useCORS: true,
-            backgroundColor: null, // Puedes establecer un color de fondo si es necesario
-            imageTimeout: 0, // Deshabilitar el tiempo de espera para las imágenes
-            quality: 2, // Ajustar la calidad de la imagen (puedes ajustar según sea necesario)
+            backgroundColor: null, 
+            imageTimeout: 0, 
+            quality: 2, 
         };
 
         // Utilizar html2canvas con las opciones configuradas
@@ -492,7 +487,74 @@ function descargarHorario() {
 
 }
 
+function actualizarHorario() {
+    const horarioInicioInput = obtenerHora(document.getElementById('horario-inicio').value);
+    const horarioIntervaloInput = parseInt(obtenerHora(document.getElementById('horario-intervalo').value));
 
+    // Verificar que los valores sean válidos
+    if (horarioInicioInput === '' || isNaN(horarioIntervaloInput)) {
+        //console.log('Por favor, ingrese valores válidos para la hora de inicio y el intervalo.');
+        Swal.fire({
+            title: 'Datos incompletos',
+            text: 'Debe especificar el inicio del horario',
+            icon: 'warning',
+            confirmButtonText: 'Aceptar'
+        });
+        return;
+    }
+
+    // Crear un objeto Date con la hora de inicio
+    var fechaInicio = new Date('2000-01-01T' + horarioInicioInput + ':00');
+
+    // Inicializar el array de tiempoIntervalo
+    var tiempoIntervalo = [];
+
+    // Calcular y agregar intervalos al array
+    for (var i = 0; i < 15; i++) {
+        // Clonar la fecha de inicio
+        var nuevaFecha = new Date(fechaInicio);
+
+        // Sumar el intervalo a los minutos
+        nuevaFecha.setMinutes(nuevaFecha.getMinutes() + horarioIntervaloInput * i);
+
+        // Formatear las horas y minutos
+        var horaInicio = nuevaFecha.getHours().toString().padStart(2, '0');
+        var minutoInicio = nuevaFecha.getMinutes().toString().padStart(2, '0');
+
+        // Calcular los minutos finales y la hora final
+        var minutosFinales = nuevaFecha.getMinutes() + horarioIntervaloInput;
+        var horaFinal = nuevaFecha.getHours();
+
+        // Ajustar si los minutos superan 60
+        if (minutosFinales >= 60) {
+            minutosFinales -= 60;
+            horaFinal += 1;
+        }
+
+        // Formatear la hora y minutos finales
+        var horaFinalFormateada = horaFinal.toString().padStart(2, '0');
+        var minutosFinalesFormateados = minutosFinales.toString().padStart(2, '0');
+
+        tiempoIntervalo.push(`${horaInicio}:${minutoInicio} - ${horaFinalFormateada}:${minutosFinalesFormateados}`);
+    }
+
+    //console.log(tiempoIntervalo);
+    //console.log(tiempoIntervalo.length);
+
+    for (var i = 0; i < tiempoIntervalo.length; i++) {
+        //console.log('f' + (i + 1));
+        var idFila = 'f' + (i + 1);
+        var contenidoIntervalo = tiempoIntervalo[i];
+        //console.log(contenidoIntervalo);
+        var elementoFila = document.getElementById(idFila);
+        //console.log(elementoFila);
+        if (elementoFila) {
+            //console.log(elementoFila);
+            elementoFila.innerText = contenidoIntervalo;
+
+        }
+    }
+}
 
 
 
