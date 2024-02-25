@@ -1,0 +1,146 @@
+/* Hide the default checkbox */
+.container-a input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.container-a {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    font-size: 1.5rem;
+    user-select: none;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    margin-left: 5px;
+    --clr: #0d0b6e;
+    position: relative;
+    top: 0;
+    left: 0;
+    border: 1px solid #ccc;
+    height: 1.3em;
+    width: 1.3em;
+    background-color: #ccc;
+    border-radius: 5px;
+    transition: 300ms;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container-a input:checked~.checkmark {
+    background-color: var(--clr);
+    border-radius: 5px;
+    animation: pulse 500ms ease-in-out;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.container-a input:checked~.checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.container-a .checkmark:after {
+    left: 0.45em;
+    top: 0.25em;
+    width: 0.25em;
+    height: 0.5em;
+    border: solid #E0E0E2;
+    border-width: 0 0.15em 0.15em 0;
+    transform: rotate(45deg);
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 #150b6e90;
+        /* rotate: 20deg; */
+    }
+
+    50% {
+        /* rotate: -20deg; */
+    }
+
+    75% {
+        /* box-shadow: 0 0 0 10px #120b6e60; */
+    }
+
+    100% {
+        box-shadow: 0 0 0 5px #150b6e30;
+        /* rotate: 0; */
+    }
+}
+
+/********************************************/
+/********************************************/
+/********************************************/
+/********************************************/
+/********************************************/
+/********************************************/
+.ani {
+    outline: none;
+    cursor: pointer;
+    border: none;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    position: relative;
+    display: inline-block;
+    letter-spacing: 0.05rem;
+    font-weight: 700;
+    font-size: 17px;
+    border-radius: 5px;
+    overflow: hidden;
+    color: ghostwhite;
+}
+
+.ani span {
+    position: relative;
+    z-index: 10;
+    transition: color 0.4s;
+}
+
+.ani:hover span {
+    color: black;
+}
+
+.ani::before,
+.ani::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.ani::before {
+    content: "";
+    background: #000000;
+    width: 120%;
+    left: -10%;
+    transform: skew(30deg);
+    transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+}
+
+.ani:hover::before {
+    transform: translate3d(100%, 0, 0);
+}
+
+
+/********************************************/
+/********************************************/
+/********************************************/
+/********************************************/
+/********************************************/
+/********************************************/
+/********************************************/

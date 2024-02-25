@@ -44,6 +44,7 @@ var idsCumplidos = [];
 var cursos = [];
 let indice = 1;
 var estado = [];
+var verificarUltimaHora = '14:30'
 function agregarCurso() {
     idsCumplidos.splice(0, idsCumplidos.length);
     // Obtener los valores del formulario
@@ -53,6 +54,15 @@ function agregarCurso() {
     const horaFin = obtenerHora(document.getElementById('hora-fin').value);
     var colorSeleccionado = document.getElementById('color').value;
     var checkbox = document.getElementById('fusionar-celdas');
+    if(horaInicio>=verificarUltimaHora){
+        Swal.fire({
+            title: 'Límite superado',
+            text: 'La hora inicio es mayor a la hora final',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+        });
+        return;
+    }
     if (nombreCurso == '' && diasSeleccionados.length == 0 && horaInicio == '' && horaFin == '') {
         Swal.fire({
             title: 'Datos incompletos',
@@ -105,7 +115,7 @@ function agregarCurso() {
     //console.log('id maximo: ', idsCumplidos);
     // Crear un array para almacenar los resultados finales
     var resultados = [];
-    console.log(resultados);
+    //console.log(resultados);
     // Bucle externo para iterar sobre los IDs cumplidos
     for (var i = 0; i < idsCumplidos.length; i++) {
         var idCumplido = idsCumplidos[i];
@@ -606,6 +616,10 @@ function actualizarHorario() {
 
         }
     }
+    ultimaHoraFila = tiempoIntervalo[tiempoIntervalo.length-1];
+    const partes = ultimaHoraFila.split(' - ');
+    verificarUltimaHora = partes[1];
+    //console.log(verificarUltimaHora);
     Swal.fire({
         title: 'Listo',
         text: 'Se actualizó el horario exitosamente',
@@ -613,6 +627,13 @@ function actualizarHorario() {
         confirmButtonText: 'Aceptar'
     });
 }
-
-
+/*
+⠀⠀⠀⠀⠀⠀⠀⢠⣿⣶⣄⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ 
+⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣦⣄⣀⡀⣠⣾⡇⠀⠀⠀⠀ 
+⠀⠀⠀⠀⠀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀ 
+⠀⠀⠀⢀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⢿⣿⣿⡇⠀⠀⠀⠀ 
+⣶⣿⣦⣜⣿⣿⣿⡟⠻⣿⣿⣿⣿⣿⣿⣿⡿⢿⡏⣴⣺⣦⣙⣿⣷⣄⠀⠀⠀ 
+⣯⡇⣻⣿⣿⣿⣿⣷⣾⣿⣬⣥⣭⣽⣿⣿⣧⣼⡇⣯⣇⣹⣿⣿⣿⣿⣧⠀⠀ 
+⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠸⣿⣿⣿⣿⣿⣿⣿⣷
+*/
 

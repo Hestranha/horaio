@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles-estetica.css" />
     <link rel="icon" href="hora.png" type="image/png" />
     <link rel="icon" sizes="192x192" href="hora_192.png" />
     <title>Horario</title>
@@ -25,7 +26,7 @@
             <label style="margin-right: 10px" for="nombre-curso"
               >Nombre del Curso:</label
             >
-            <input type="text" id="nombre-curso" required />
+            <input type="text" id="nombre-curso" required maxlength="50"/>
           </div>
           <div class="container-dias">
             <label class="style-dias">Días:</label>
@@ -56,11 +57,17 @@
             <input type="time" id="hora-fin" required />
           </div>
           <div class="container-color">
-            <label class="style-color" for="color">Color:</label>
-            <input style="margin-right: 10px" type="color" id="color" required />
+            <div class="style-color">
+              <label for="color">Color:</label>
+              <input style="margin-left: 10px;" type="color" id="color" required />
+            </div>
             <div class="container-celdas">
               <label class="style-celdas" for="fusionar-celdas">Fusionar celdas:</label>
-              <input type="checkbox" id="fusionar-celdas" required />
+              <!-- <input type="checkbox" id="fusionar-celdas" required /> -->
+              <label class="container-a">
+                <input type="checkbox" id="fusionar-celdas" required>
+                <div class="checkmark"></div>
+              </label>
             </div>
           </div>
         </div>
@@ -69,7 +76,7 @@
           <div class="detalles-content">
             <hr>
             <h2>Detalles de horario</h2>
-            <div class="container-horario">
+            <div class="container-horario container-hora">
               <label style="margin-right: 10px" for="horario-inicio">Inicio:</label>
               <input type="time" id="horario-inicio" required />
               <!-- 
@@ -77,23 +84,25 @@
               <input type="time" id="horario-fin" required /> 
               -->
             </div>
-            <div class="container-intervalo">
+            <div class="container-intervalo container-hora">
               <label style="margin-right: 10px" for="horario-intervalo">Intervalo (min):</label>
-              <input type="number" id="horario-intervalo" required step="10" min="30" value="30" max="60"/>
+              <input type="number" id="horario-intervalo" required step="10" min="30" value="30" max="60" oninput="this.value = Math.min(60, Math.max(30, parseInt(this.value) || 0))" />
             </div>
-            <button class="actualizarHorario" type="button" onclick="actualizarHorario()">Actualizar</button>
+            <button class="ani actualizarHorario" type="button" onclick="actualizarHorario()">
+              <span>Actualizar</span>
+            </button>
             <hr>
           </div>
         </div>
         <div class="contenedor-3">
-          <button class="agregar" type="button" onclick="agregarCurso()">
-            Agregar
+          <button class="ani agregar" type="button" onclick="agregarCurso()">
+            <span>Agregar</span>
           </button>
-          <button class="descargar" type="button" onclick="descargarHorario()">
-            Descargar
+          <button class="ani descargar" type="button" onclick="descargarHorario()">
+            <span>Descargar</span>
           </button>
-          <button class="borrar" type="button" onclick="borrarCurso()">
-            Cursos
+          <button class="ani borrar" type="button" onclick="borrarCurso()">
+            <span>Cursos</span>
           </button>
         </div>
       </form>

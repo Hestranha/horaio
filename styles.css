@@ -4,9 +4,11 @@ body {
     padding: 0;
     background-color: #f4f4f4;
 }
-button{
+
+button {
     font-family: 'Courier New', Courier, monospace;
 }
+
 /* Firefox (uncomment to work in Firefox, although other properties will not work!)  */
 /** {
   scrollbar-width: thin;
@@ -92,6 +94,9 @@ td {
     width: 200px
 }
 
+/********************************************/
+/********************************************/
+/********************************************/
 .container-nombre-curso {
     display: flex;
     align-items: center;
@@ -108,11 +113,25 @@ td {
     padding: 8px;
     font-size: 14px;
     border: 1px solid #ccc;
+    background-color: #f0f0f0;
     border-radius: 5px;
     outline: none;
     width: 230px;
+    transition: background-color 300ms;
 }
 
+.container-nombre-curso input:focus {
+    background-color: #bec9fdad;
+    border: 1px solid #120b6e90;
+}
+
+.container-nombre-curso input:valid {
+    background-color: #e6ecff;
+}
+
+/********************************************/
+/********************************************/
+/********************************************/
 .container-dias {
     display: flex;
     flex-direction: wrap;
@@ -130,16 +149,56 @@ td {
 }
 
 .style-color {
+    display: flex;
+    align-items: center;
     margin-left: 10px;
     margin-right: 10px;
 }
 
+.style-color input {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    transition: background-color 300ms;
+}
+
+.style-color input:focus {
+    background-color: #bec9fdad;
+    border: 1px solid #120b6e90;
+}
+
+.style-color input:valid {
+    background-color: #e6ecff;
+}
+
 .days-checkbox {
     display: flex;
+    position: relative;
+    /* cursor: pointer; */
+    font-size: 1.5rem;
+    user-select: none;
+    /*
+    display: flex;
     gap: 10px;
+    */
 }
 
 .days-checkbox label {
+    cursor: pointer;
+    display: flex;
+    /* padding: 10px; */
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: background-color 300ms;
+    /*
     display: flex;
     align-items: center;
     justify-content: center;
@@ -150,15 +209,46 @@ td {
     border: 1px solid #ccc;
     border-radius: 5px;
     cursor: pointer;
+    */
 }
 
 .days-checkbox input {
-    display: none;
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+    /* display: none; */
 }
 
 .days-checkbox input:checked+label {
+    background-color: #0d0b6e;
+    color: #fff;
+    animation: pulse-a 500ms ease-in-out;
+    /* 
     background-color: #52c76b;
-    color: white;
+    color: white; 
+    */
+}
+
+@keyframes pulse-a {
+    0% {
+        box-shadow: 0 0 0 #120b6e90;
+        /* transform: rotate(20deg); */
+    }
+
+    50% {
+        /* transform: rotate(-20deg); */
+    }
+
+    75% {
+        /* box-shadow: 0 0 0 3px #0B6E4F60; */
+    }
+
+    100% {
+        box-shadow: 0 0 0 5px #0b0d6e30;
+        /* transform: rotate(0); */
+    }
 }
 
 /*************************/
@@ -233,10 +323,25 @@ td {
 .container-hora input {
     padding: 8px;
     font-size: 14px;
+    background-color: #f0f0f0;
     border: 1px solid #ccc;
     border-radius: 5px;
     outline: none;
+    transition: background-color 300ms;
 }
+
+.container-hora input:focus {
+    background-color: #bec9fdad;
+    border: 1px solid #120b6e90;
+}
+
+.container-hora input:valid {
+    background-color: #e6ecff;
+}
+
+/*************************/
+/*************************/
+/*************************/
 
 .container-color {
     display: flex;
@@ -260,6 +365,9 @@ td {
     outline: none;
 }
 
+/*************************/
+/*************************/
+/*************************/
 .container-celdas {
     display: flex;
     align-items: center;
@@ -272,10 +380,11 @@ td {
     color: #333;
 }
 
-.container-celdas  input {
+.container-celdas input {
     width: 20px;
     height: 20px;
     font-size: 14px;
+    cursor: pointer;
     border: 1px solid #ccc;
     border-radius: 5px;
     outline: none;
@@ -286,50 +395,22 @@ td {
 /*************************/
 /*************************/
 .agregar {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: 20px;
-}
-
-.agregar:hover {
-    background-color: #45a049;
+    background-color: #6bfd6f;
 }
 
 .descargar {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #4c7faf;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    background-color: #6cb8ff;
     margin-left: 10px;
-    margin-bottom: 20px;
 }
 
-.descargar:hover {
-    background-color: #5345a0;
-}
 
 .borrar {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #aa32ce;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    background-color: #ff74ff;
     margin-left: 10px;
-    margin-bottom: 20px;
 }
 
-.borrar:hover {
-    background-color: #a127a5;
+.actualizarHorario {
+    background-color: #eeff52;
 }
 
 .botones-ajustes {
@@ -366,39 +447,26 @@ td {
     border-radius: 5px;
     cursor: pointer;
 }
-.opciones-botones{
-    display: flex;
-    flex-direction: wrap;
-    align-items: center;
-}
-.seleccion{
+
+.opciones-botones {
     display: flex;
     flex-direction: wrap;
     align-items: center;
 }
 
-.seleccion p{
+.seleccion {
+    display: flex;
+    flex-direction: wrap;
+    align-items: center;
+}
+
+.seleccion p {
     margin: 0px;
     padding: 0px;
 }
 
 .confirmarBorrarCurso:hover {
     background-color: #a52727;
-}
-
-.actualizarHorario {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #eeff52;
-    color: rgb(0, 0, 0);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: 20px;
-}
-
-.actualizarHorario:hover {
-    background-color: #bedb18;
 }
 
 /*************************/
@@ -426,6 +494,7 @@ td {
     border-radius: 5px;
     outline: none;
 }
+
 .container-intervalo {
     display: flex;
     align-items: center;
@@ -447,6 +516,7 @@ td {
     border-radius: 5px;
     outline: none;
 }
+
 /*************************/
 /*************************/
 /*************************/
@@ -457,7 +527,7 @@ td {
     border: 1px solid #ddd;
     padding: 10px;
     margin-bottom: 20px;
-    
+
 }
 
 .toggle-detalles {
@@ -477,10 +547,11 @@ td {
     /* justify-content: center; */
 }
 
-.detalles-content h2{
+.detalles-content h2 {
     font-size: 20px;
 }
-.detalles-content hr{
+
+.detalles-content hr {
     width: 100%;
 
 }
@@ -509,6 +580,7 @@ td {
 .contenedor-3 {
     display: flex;
     justify-content: center;
+    flex-direction: wrap;
 }
 
 @media screen and (max-width: 768px) {
@@ -528,6 +600,15 @@ td {
         flex-direction: column;
     }
 
+    .contenedor-3 {
+        display: flex;
+        gap: 10px;
+        /* flex-direction: column; */
+    }
+    .descargar, .borrar{
+        margin-left: 0px;
+    }
+
     .modal-contenido {
         width: 80%;
     }
@@ -537,11 +618,26 @@ td {
         align-items: center;
         /*justify-content: start; */
     }
+    .ani{
+        width: 110px;
+        display: flex;
+        font-size: 11px !important;
+    }
     /*
     .detalles-content {
          align-items: start; 
     }
     */
+}
+
+.container-nombre-curso input:hover:not(:focus-within),
+.days-checkbox label:hover:not(:focus-within),
+.container-hora input:hover:not(:focus-within),
+/* .container-color input:hover:not(:focus-within), */
+.container-a div:hover:not(:focus-within)
+{
+    background-color: #a2b3ff !important;
+    border: 1px solid #a2b3ff;
 }
 
 #miHorario td {
