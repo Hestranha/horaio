@@ -52,14 +52,31 @@
           <div class="container-hora">
             <label style="margin-right: 10px" for="hora-inicio">Desde:</label>
             <input type="time" id="hora-inicio" required />
-            <label style="margin-right: 10px; margin-left: 10px" for="hora-fin"
-              >Hasta:</label
-            >
+            <label style="margin-right: 10px; margin-left: 10px" for="hora-fin">Hasta:</label>
             <input type="time" id="hora-fin" required />
           </div>
           <div class="container-color">
             <label class="style-color" for="color">Color:</label>
             <input type="color" id="color" required />
+          </div>
+        </div>
+        <div class="detalles-extra">
+          <div class="toggle-detalles" onclick="toggleDetalles()">▼</div>
+          <div class="detalles-content">
+            <hr>
+            <h2>Detalles de horario</h2>
+            <div class="container-horario">
+              <label style="margin-right: 10px" for="horario-inicio">Inicio:</label>
+              <input type="time" id="horario-inicio" required />
+              <label style="margin-right: 10px; margin-left: 10px" for="horario-fin">Fin:</label>
+              <input type="time" id="horario-fin" required />
+            </div>
+            <div class="container-intervalo">
+              <label style="margin-right: 10px" for="horario-intervalo">Intervalo (min):</label>
+              <input type="number" id="horario-intervalo" required step="10" min="30" value="30" max="50"/>
+            </div>
+            <button class="actualizarHorario" type="button" onclick="actualizarHorario()">Actualizar</button>
+            <hr>
           </div>
         </div>
         <div class="contenedor-3">

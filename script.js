@@ -6,17 +6,22 @@ generarColorPastel();
 // Obtén la referencia al checkbox "borrarTodos"
 var checkboxBorrarTodos = document.getElementById('borrarTodos');
 // Agrega un evento de cambio al checkbox "borrarTodos"
-checkboxBorrarTodos.addEventListener('change', function() {
+checkboxBorrarTodos.addEventListener('change', function () {
     // Obtén todos los checkboxes dentro de .infoCursos
     var checkboxesInfoCursos = document.querySelectorAll('.infoCursos input[type="checkbox"]');
-    
+
     // Recorre todos los checkboxes y establece su propiedad checked según el estado del checkbox "borrarTodos"
-    checkboxesInfoCursos.forEach(function(checkbox) {
+    checkboxesInfoCursos.forEach(function (checkbox) {
         checkbox.checked = checkboxBorrarTodos.checked;
     });
 });
 //***************************************************************
 //***************************************************************
+function toggleDetalles() {
+    var detallesContent = document.querySelector('.detalles-content');
+    detallesContent.style.display = detallesContent.style.display === 'none' ? 'flex' : 'none';
+}
+
 //***************************************************************
 //***************************************************************
 function generarColorPastel() {
@@ -40,13 +45,14 @@ var cursos = [];
 let indice = 1;
 var estado = [];
 function agregarCurso() {
+    idsCumplidos.splice(0, idsCumplidos.length);
     // Obtener los valores del formulario
     const nombreCurso = document.getElementById('nombre-curso').value;
     const diasSeleccionados = obtenerDiasSeleccionados();
     const horaInicio = obtenerHora(document.getElementById('hora-inicio').value);
     const horaFin = obtenerHora(document.getElementById('hora-fin').value);
     var colorSeleccionado = document.getElementById('color').value;
-    if(nombreCurso == '' && diasSeleccionados.length == 0 && horaInicio == '' && horaFin == ''){
+    if (nombreCurso == '' && diasSeleccionados.length == 0 && horaInicio == '' && horaFin == '') {
         Swal.fire({
             title: 'Campos incompletos',
             text: 'Debe llenar la información de un curso',
@@ -71,17 +77,20 @@ function agregarCurso() {
         // Obtener la hora de fin de la fila actual (asumiendo que está en el formato hh:mm)
         var horaFilaFin = filas[i].querySelector('th').innerText.split(' - ')[1];
         // Verificar si la hora de inicio o la hora de fin está dentro del rango
+        
         if (horaFilaFin > horaInicio && horaFilaInicio <= horaFin) {
+            //console.log(`horaFilaFin > horaInicio &&  horaFilaInicio <= horaFin`);
+            //console.log(` ${horaFilaFin} > ${horaInicio} &&  ${horaFilaInicio} <= ${horaFin}`);
             // Asignar la última hora menor que la hora de inicio y fin proporcionadas
-            console.log('----------' ,horaFilaInicio);
+            //console.log('----------', horaFilaInicio);
             if (horaFilaInicio < horaInicio) {
                 ultimaHoraMenorInicio = horaFilaInicio;
-                console.log('Ultima hora MENOR: ',ultimaHoraMenorInicio);
+                //console.log('Ultima hora MENOR: ', ultimaHoraMenorInicio);
             }
             if (horaFilaFin < horaFin) {
                 ultimaHoraMenorFin = horaFilaFin;
-                console.log('Ultima hora MAYOR:',ultimaHoraMenorFin);
-            } 
+                //console.log('Ultima hora MAYOR:', ultimaHoraMenorFin);
+            }
             // Agregar la fila actual al array idsCumplidos
             //console.log(filas[i].querySelector('th').id);
             idsCumplidos.push(filas[i].querySelector('th').id);
@@ -107,59 +116,92 @@ function agregarCurso() {
             resultados.push(resultado);
         }
     }
-
-    // Imprimir los resultados en la consola
-    // console.log("Resultados:", resultados);
-    var nuevoCurso = {
-        "id": indice,
-        "nombre": nombreCurso,
-        "celdas": resultados,
-        "dias": diasSeleccionados,
-        "hora": [horaInicio, horaFin],
-    };
-    cursos.push(nuevoCurso);
-    indice += 1;
-    //console.log(nuevoCurso);
-    // Bucle para iterar sobre los resultados
-    for (var i = 0; i < resultados.length; i++) {
-        var idResultado = resultados[i];
-
-        // Obtener la celda correspondiente a la combinación de fila y día
-        var celda = document.getElementById(idResultado);
-        //console.log(colorSeleccionado);
-        // Verificar si la celda existe antes de actualizar su contenido
-        if (celda) {
-            // Actualizar el contenido de la celda con el nombre del curso
-            celda.innerText = nombreCurso + '\n(' + horaInicio + '-' + horaFin + ')';
-            celda.style.backgroundColor = colorSeleccionado;
+    var hayDuplicados = false;
+    if (cursos.length !== 0) {
+        for (var i = 0; i < cursos.length; i++) {
+            var cursoExistente = cursos[i];
+            var celdasExistente = cursoExistente.celdas;
+    
+            for (var j = 0; j < resultados.length; j++) {
+                if (celdasExistente.includes(resultados[j])) {
+                    hayDuplicados = true;
+                    break;
+                }
+            }
+    
+            if (hayDuplicados) {
+                console.log('¡Celdas duplicadas encontradas!');
+                Swal.fire({
+                    title: 'Error',
+                    text: 'El curso interfiere con otro',
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                });
+                break;
+            }
         }
     }
+    if (!hayDuplicados) {
+        // Imprimir los resultados en la consola
+        //console.log("Resultados:", resultados);
+        var nuevoCurso = {
+            "id": indice,
+            "nombre": nombreCurso,
+            "celdas": resultados,
+            "dias": diasSeleccionados,
+            "hora": [horaInicio, horaFin],
+        };
+        cursos.push(nuevoCurso);
+        indice += 1;
+        //console.log(nuevoCurso);
+        // Bucle para iterar sobre los resultados
+        for (var i = 0; i < resultados.length; i++) {
+            var idResultado = resultados[i];
 
-    var longitudArray = idsCumplidos.length;
-    //console.log(longitudArray);
-    if (ultimoValor == null) {
-        ultimoValor = idsCumplidos[longitudArray - 1].replace('f', '');
-    } else {
-        aaa = idsCumplidos[longitudArray - 1].replace('f', '');
-        var numeroUltimoValor = parseFloat(ultimoValor);
-        var numeroAaa = parseFloat(aaa);
-        //console.log(aaa);
+            // Obtener la celda correspondiente a la combinación de fila y día
+            var celda = document.getElementById(idResultado);
+            //console.log(colorSeleccionado);
+            // Verificar si la celda existe antes de actualizar su contenido
+            if (celda) {
+                // Actualizar el contenido de la celda con el nombre del curso
+                celda.innerText = nombreCurso + '\n(' + horaInicio + '-' + horaFin + ')';
+                celda.style.backgroundColor = colorSeleccionado;
+            }
+        }
+
+        var longitudArray = idsCumplidos.length;
+        //console.log(longitudArray);
+        if (ultimoValor == null) {
+            ultimoValor = idsCumplidos[longitudArray - 1].replace('f', '');
+        } else {
+            aaa = idsCumplidos[longitudArray - 1].replace('f', '');
+            var numeroUltimoValor = parseFloat(ultimoValor);
+            var numeroAaa = parseFloat(aaa);
+            //console.log(aaa);
+            //console.log(ultimoValor);
+            if (numeroAaa > numeroUltimoValor) {
+                ultimoValor = aaa;
+            }
+        }
+        //ultimoValor = idsCumplidos[longitudArray - 1].replace('f', '');
         //console.log(ultimoValor);
-        if (numeroAaa > numeroUltimoValor) {
-            ultimoValor = aaa;
-        }
-    }
-    //ultimoValor = idsCumplidos[longitudArray - 1].replace('f', '');
-    //console.log(ultimoValor);
-    //console.log('valor final: ', ultimoValor);
-    console.log(diasSeleccionados);
-    contieneSeisO7 = diasSeleccionados.includes('6') || diasSeleccionados.includes('7'); // true o false
-    //console.log(contieneSeisO7);
+        //console.log('valor final: ', ultimoValor);
+        //console.log(diasSeleccionados);
+        contieneSeisO7 = diasSeleccionados.includes('6') || diasSeleccionados.includes('7'); // true o false
+        //console.log(contieneSeisO7);
 
-    idsCumplidos.splice(0, idsCumplidos.length);
-    //resultados.splice(0, resultados.length);
-    //limpiar
-    //document.getElementById('nombre-curso').value = "";
+        
+        //resultados.splice(0, resultados.length);
+        //limpiar
+        //document.getElementById('nombre-curso').value = "";
+        Swal.fire({
+            title: 'Listo',
+            text: 'Se agregó el curso exitosamente',
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+        });
+
+    }
 
 }
 /*
@@ -182,7 +224,7 @@ var cursos = {
 */
 //borrarCurso();
 function borrarCurso() {
-    if (cursos.length == 0){
+    if (cursos.length == 0) {
         Swal.fire({
             title: 'te falla no?',
             text: 'No hay ningún curso',

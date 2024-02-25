@@ -4,7 +4,9 @@ body {
     padding: 0;
     background-color: #f4f4f4;
 }
-
+button{
+    font-family: 'Courier New', Courier, monospace;
+}
 /* Firefox (uncomment to work in Firefox, although other properties will not work!)  */
 /** {
   scrollbar-width: thin;
@@ -363,10 +365,112 @@ td {
     background-color: #a52727;
 }
 
+.actualizarHorario {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #eeff52;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.actualizarHorario:hover {
+    background-color: #bedb18;
+}
+
 /*************************/
 /*************************/
 /*************************/
 /*************************/
+.container-horario {
+    display: flex;
+    align-items: center;
+    flex-direction: wrap;
+    margin-bottom: 20px;
+}
+
+.container-horario label {
+    font-size: 16px;
+    color: #333;
+}
+
+.container-horario input {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+.container-intervalo {
+    display: flex;
+    align-items: center;
+    flex-direction: wrap;
+    margin-bottom: 20px;
+}
+
+.container-intervalo label {
+    font-size: 16px;
+    color: #333;
+}
+
+.container-intervalo input {
+    display: flex;
+    width: 50px;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+/*************************/
+/*************************/
+/*************************/
+/*************************/
+.detalles-extra {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 20px;
+    
+}
+
+.toggle-detalles {
+    cursor: pointer;
+    font-size: 20px;
+    padding: 0px 5px;
+    width: 100%;
+    height: auto;
+    text-align: center;
+}
+
+
+.detalles-content {
+    display: none;
+    align-items: center;
+    flex-direction: column;
+    /* justify-content: center; */
+}
+
+.detalles-content h2{
+    font-size: 20px;
+}
+.detalles-content hr{
+    width: 100%;
+
+}
+
+/*************************/
+/*************************/
+/*************************/
+/*************************/
+/*************************/
+/*************************/
+/*************************/
+/*************************/
+
 .contenedor-1 {
     display: flex;
     justify-content: center;
@@ -403,5 +507,13 @@ td {
 
     .modal-contenido {
         width: 80%;
+    }
+
+    .container-horario {
+        flex-direction: column;
+    }
+
+    .detalles-content {
+        align-items: start;
     }
 }
