@@ -554,6 +554,12 @@ function actualizarHorario() {
 
         }
     }
+    Swal.fire({
+        title: 'Listo',
+        text: 'Se actualizó el horario exitosamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+    });
 }
 
 

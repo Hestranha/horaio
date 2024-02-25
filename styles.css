@@ -522,3 +522,7 @@ td {
     }
     */
 }
+
+#miHorario td {
+    font-weight: bold;
+}
