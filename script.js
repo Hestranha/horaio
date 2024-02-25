@@ -52,6 +52,7 @@ function agregarCurso() {
     const horaInicio = obtenerHora(document.getElementById('hora-inicio').value);
     const horaFin = obtenerHora(document.getElementById('hora-fin').value);
     var colorSeleccionado = document.getElementById('color').value;
+    var checkbox = document.getElementById('fusionar-celdas');
     if (nombreCurso == '' && diasSeleccionados.length == 0 && horaInicio == '' && horaFin == '') {
         Swal.fire({
             title: 'Datos incompletos',
@@ -83,14 +84,16 @@ function agregarCurso() {
             //console.log(` ${horaFilaFin} > ${horaInicio} &&  ${horaFilaInicio} <= ${horaFin}`);
             // Asignar la última hora menor que la hora de inicio y fin proporcionadas
             //console.log('----------', horaFilaInicio);
-            if (horaFilaInicio < horaInicio) {
+            
+            if (horaFilaInicio <= horaInicio) {
                 ultimaHoraMenorInicio = horaFilaInicio;
                 //console.log('Ultima hora MENOR: ', ultimaHoraMenorInicio);
             }
-            if (horaFilaFin < horaFin) {
+            if (horaFilaFin <= horaFin) {
                 ultimaHoraMenorFin = horaFilaFin;
                 //console.log('Ultima hora MAYOR:', ultimaHoraMenorFin);
             }
+            
             // Agregar la fila actual al array idsCumplidos
             //console.log(filas[i].querySelector('th').id);
             idsCumplidos.push(filas[i].querySelector('th').id);
@@ -102,7 +105,7 @@ function agregarCurso() {
     //console.log('id maximo: ', idsCumplidos);
     // Crear un array para almacenar los resultados finales
     var resultados = [];
-    // console.log(resultados);
+    console.log(resultados);
     // Bucle externo para iterar sobre los IDs cumplidos
     for (var i = 0; i < idsCumplidos.length; i++) {
         var idCumplido = idsCumplidos[i];
@@ -164,11 +167,21 @@ function agregarCurso() {
             // Verificar si la celda existe antes de actualizar su contenido
             if (celda) {
                 // Actualizar el contenido de la celda con el nombre del curso
-                celda.innerText = nombreCurso + '\n(' + horaInicio + '-' + horaFin + ')';
+                //console.log(` ${ultimaHoraMenorInicio} == ${horaInicio} &&  ${ultimaHoraMenorFin} == ${horaFin}`);
+                if(ultimaHoraMenorInicio == horaInicio && ultimaHoraMenorFin == horaFin) { 
+                    celda.innerText = nombreCurso;
+                } else {
+                    celda.innerText = nombreCurso + '\n(' + horaInicio + '-' + horaFin + ')';
+                }
+                
                 celda.style.backgroundColor = colorSeleccionado;
             }
         }
-
+        
+        if (checkbox.checked) {
+            fusionarCeldasAutomaticamente(resultados);
+        }
+    
         var longitudArray = idsCumplidos.length;
         //console.log(longitudArray);
         if (ultimoValor == null) {
@@ -222,6 +235,45 @@ var cursos = {
     }
 };
 */
+function fusionarCeldasAutomaticamente(resultados) {
+    // Obtener todas las filas afectadas
+    var filasAfectadas = {};
+    for (var i = 0; i < resultados.length; i++) {
+        var filaDia = resultados[i].split('-');
+        var fila = filaDia[0];
+        var dia = filaDia[1];
+        if (!filasAfectadas[dia]) {
+            filasAfectadas[dia] = [];
+        }
+        filasAfectadas[dia].push(fila);
+    }
+
+    // Fusionar las celdas por día
+    for (var dia in filasAfectadas) {
+        var filas = filasAfectadas[dia];
+        if (filas.length > 1) {
+            // Obtener las celdas de la columna para fusionar
+            var celdasAFusionar = filas.map(function (fila) {
+                return document.getElementById(fila + '-' + dia);
+            });
+
+            // Fusionar las celdas utilizando la función de fusión de celdas
+            fusionarCeldas(celdasAFusionar);
+        }
+    }
+}
+
+function fusionarCeldas(celdas) {
+    if (celdas.length > 1) {
+        // Fusionar las celdas solo si hay más de una
+        var primeraCelda = celdas[0];
+        for (var i = 1; i < celdas.length; i++) {
+            // Configurar el contenido de la primera celda y eliminar las celdas restantes
+            primeraCelda.rowSpan += celdas[i].rowSpan;
+            celdas[i].parentNode.removeChild(celdas[i]);
+        }
+    }
+}
 //borrarCurso();
 function borrarCurso() {
     if (cursos.length == 0) {
