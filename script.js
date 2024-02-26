@@ -3,9 +3,8 @@ generarColorPastel();
 //***************************************************************
 //***************************************************************
 //***************************************************************
-// Obtén la referencia al checkbox "borrarTodos"
+// referencia al checkbox "borrarTodos"
 var checkboxBorrarTodos = document.getElementById('borrarTodos');
-var detallesContent = document.querySelector('.detalles-content');
 // detallesContent.style.display = 'none';
 // Agrega un evento de cambio al checkbox "borrarTodos"
 checkboxBorrarTodos.addEventListener('change', function () {
@@ -22,24 +21,15 @@ checkboxBorrarTodos.addEventListener('change', function () {
 function toggleDetalles() {
     var detallesContent = document.querySelector('.detalles-extra');
     var toggleButton = document.querySelector('.toggle-detalles');
-
-    // Toggle the visibility class
     var isVisible = detallesContent.classList.toggle('visible');
-
-    // Toggle the color of the button and span
     toggleButton.classList.toggle('clicked', isVisible);
     toggleButton.querySelector('span').classList.toggle('clicked', isVisible);
-
-    // Rest of your existing code...
     if (isVisible) {
         detallesContent.style.maxHeight = (detallesContent.scrollHeight) + "px";
     } else {
         detallesContent.style.maxHeight = 0;
     }
 }
-
-
-
 //***************************************************************
 //***************************************************************
 function generarColorPastel() {
