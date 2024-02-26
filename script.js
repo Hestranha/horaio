@@ -44,7 +44,7 @@ var idsCumplidos = [];
 var cursos = [];
 let indice = 1;
 var estado = [];
-var verificarUltimaHora = '14:30'
+var verificarUltimaHora = '19:30'
 function agregarCurso() {
     idsCumplidos.splice(0, idsCumplidos.length);
     // Obtener los valores del formulario
@@ -54,7 +54,7 @@ function agregarCurso() {
     const horaFin = obtenerHora(document.getElementById('hora-fin').value);
     var colorSeleccionado = document.getElementById('color').value;
     var checkbox = document.getElementById('fusionar-celdas');
-    if(horaInicio>=verificarUltimaHora){
+    if (horaInicio >= verificarUltimaHora) {
         Swal.fire({
             title: 'Límite superado',
             text: 'La hora inicio es mayor a la hora final',
@@ -94,7 +94,7 @@ function agregarCurso() {
             //console.log(` ${horaFilaFin} > ${horaInicio} &&  ${horaFilaInicio} <= ${horaFin}`);
             // Asignar la última hora menor que la hora de inicio y fin proporcionadas
             //console.log('----------', horaFilaInicio);
-            
+
             if (horaFilaInicio <= horaInicio) {
                 ultimaHoraMenorInicio = horaFilaInicio;
                 //console.log('Ultima hora MENOR: ', ultimaHoraMenorInicio);
@@ -103,7 +103,7 @@ function agregarCurso() {
                 ultimaHoraMenorFin = horaFilaFin;
                 //console.log('Ultima hora MAYOR:', ultimaHoraMenorFin);
             }
-            
+
             // Agregar la fila actual al array idsCumplidos
             //console.log(filas[i].querySelector('th').id);
             idsCumplidos.push(filas[i].querySelector('th').id);
@@ -178,20 +178,20 @@ function agregarCurso() {
             if (celda) {
                 // Actualizar el contenido de la celda con el nombre del curso
                 //console.log(` ${ultimaHoraMenorInicio} == ${horaInicio} &&  ${ultimaHoraMenorFin} == ${horaFin}`);
-                if(ultimaHoraMenorInicio == horaInicio && ultimaHoraMenorFin == horaFin) { 
+                if (ultimaHoraMenorInicio == horaInicio && ultimaHoraMenorFin == horaFin) {
                     celda.innerText = nombreCurso;
                 } else {
                     celda.innerText = nombreCurso + '\n(' + horaInicio + '-' + horaFin + ')';
                 }
-                
+
                 celda.style.backgroundColor = colorSeleccionado;
             }
         }
-        
+
         if (checkbox.checked) {
             fusionarCeldasAutomaticamente(resultados);
         }
-    
+
         var longitudArray = idsCumplidos.length;
         //console.log(longitudArray);
         if (ultimoValor == null) {
@@ -257,7 +257,7 @@ function fusionarCeldasAutomaticamente(resultados) {
         }
         filasAfectadas[dia].push(fila);
     }
-
+    //console.log('FUSION: ', filasAfectadas);
     // Fusionar las celdas por día
     for (var dia in filasAfectadas) {
         var filas = filasAfectadas[dia];
@@ -266,8 +266,6 @@ function fusionarCeldasAutomaticamente(resultados) {
             var celdasAFusionar = filas.map(function (fila) {
                 return document.getElementById(fila + '-' + dia);
             });
-
-            // Fusionar las celdas utilizando la función de fusión de celdas
             fusionarCeldas(celdasAFusionar);
         }
     }
@@ -340,12 +338,43 @@ function cerrarVentanaEmergente() {
     document.body.style.overflow = 'auto';
 }
 
+function actualizarCeldas(celdasId) {
+    // Iterar sobre el array de celdasId
+    celdasId.forEach(function(id) {
+      // Extraer información de fila y columna del id
+      var fila = id.split('-')[0].substring(1); // Obtener el número de fila
+      var columna = id.split('-')[1]; // Obtener el número de columna
+  
+      // Encontrar la fila correspondiente en la tabla
+      var filaElemento = document.getElementById(fila);
+  
+      // Verificar si la fila existe
+      if (filaElemento) {
+        // Buscar la celda correspondiente en la fila
+        var celda = filaElemento.querySelector('#' + id);
+  
+        // Verificar si la celda existe
+        if (celda) {
+          // Si la celda existe, reemplazarla por una nueva celda con el mismo ID
+          var nuevaCelda = document.createElement('td');
+          nuevaCelda.id = id;
+          celda.parentNode.replaceChild(nuevaCelda, celda);
+        } else {
+          // Si la celda no existe, crear una nueva celda con el ID proporcionado
+          var nuevaCelda = document.createElement('td');
+          nuevaCelda.id = id;
+          filaElemento.appendChild(nuevaCelda);
+        }
+      }
+    });
+  }
+
 function confirmarBorrarCurso() {
     const checkboxes = document.querySelectorAll('.infoCursos input[type="checkbox"]');
     let cursosSeleccionados = Array.from(checkboxes)
         .filter(checkbox => checkbox.checked)
         .map(checkbox => checkbox.value);
-    console.log(cursosSeleccionados);
+    //console.log(cursosSeleccionados);
     if (cursosSeleccionados.length > 0) {
         for (let i = 0; i < cursosSeleccionados.length; i++) {
             let cursoId = cursosSeleccionados[i];
@@ -354,8 +383,9 @@ function confirmarBorrarCurso() {
             if (index !== -1) {
                 let cursoEncontrado = cursos[index];
                 //console.log(`Celdas del curso con ID ${cursoId}:`, cursoEncontrado.celdas);
-
                 // Iterar sobre los IDs de las celdas y borrar su contenido
+                //console.log('aaaaaa: ', cursoEncontrado.celdas);
+                actualizarCeldas(cursoEncontrado.celdas);
                 cursoEncontrado.celdas.forEach(celdaId => {
                     let celda = document.getElementById(celdaId);
                     if (celda) {
@@ -444,7 +474,7 @@ function validacion() {
     return 1;
 }
 function obtenerDiasSeleccionados() {
-    const checkboxes = document.querySelectorAll('input[name="days"]:checked'); 
+    const checkboxes = document.querySelectorAll('input[name="days"]:checked');
     const diasSeleccionados = [];
     // Iterar sobre los checkboxes y agregar los valores al array
     checkboxes.forEach((checkbox) => {
@@ -479,7 +509,7 @@ function descargarHorario() {
             console.log('Aceptar clicado');
             return;
         }
-        var numeroUltimoValor = parseInt(ultimoValor, 10); 
+        var numeroUltimoValor = parseInt(ultimoValor, 10);
         numeroUltimoValor += 1;
         console.log(typeof numeroUltimoValor);
         for (var i = numeroUltimoValor; i <= 15; i++) {
@@ -508,22 +538,22 @@ function descargarHorario() {
                 elemento.style.display = 'none';
             }
         }
-        
+
         var anchoTabla = document.getElementById('miHorario').scrollWidth;
         var altoTabla = document.getElementById('miHorario').scrollHeight;
 
         var esDispositivoMovil = window.innerWidth < 768;
 
         var opcionesHtml2Canvas = {
-            width: esDispositivoMovil ? anchoTabla : null, 
-            height: esDispositivoMovil ? altoTabla : null, 
-            scale: 1.5, 
-            logging: true, 
+            width: esDispositivoMovil ? anchoTabla : null,
+            height: esDispositivoMovil ? altoTabla : null,
+            scale: 1.5,
+            logging: true,
             allowTaint: true,
             useCORS: true,
-            backgroundColor: null, 
-            imageTimeout: 0, 
-            quality: 2, 
+            backgroundColor: null,
+            imageTimeout: 0,
+            quality: 2,
         };
 
         // Utilizar html2canvas con las opciones configuradas
@@ -616,7 +646,7 @@ function actualizarHorario() {
 
         }
     }
-    ultimaHoraFila = tiempoIntervalo[tiempoIntervalo.length-1];
+    ultimaHoraFila = tiempoIntervalo[tiempoIntervalo.length - 1];
     const partes = ultimaHoraFila.split(' - ');
     verificarUltimaHora = partes[1];
     //console.log(verificarUltimaHora);
