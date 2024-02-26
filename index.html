@@ -26,7 +26,7 @@
             <label style="margin-right: 10px" for="nombre-curso"
               >Nombre del Curso:</label
             >
-            <input type="text" id="nombre-curso" required maxlength="50"/>
+            <input type="text" id="nombre-curso" required maxlength="50" autocomplete="off"/>
           </div>
           <div class="container-dias">
             <label class="style-dias">Días:</label>
@@ -71,8 +71,8 @@
             </div>
           </div>
         </div>
+        <button class="toggle-detalles" type="button" onclick="toggleDetalles()"><span>﹀</span></button>
         <div class="detalles-extra">
-          <div class="toggle-detalles" onclick="toggleDetalles()">▼</div>
           <div class="detalles-content">
             <hr>
             <h2>Detalles de horario</h2>
