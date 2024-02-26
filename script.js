@@ -340,47 +340,47 @@ function cerrarVentanaEmergente() {
 
 function actualizarCeldas(celdasId) {
     // Iterar sobre el array de celdasId
-    celdasId.forEach(function(id) {
-      // Extraer información de fila y columna del id
-      var fila = id.split('-')[0].substring(1); // Obtener el número de fila
-      var columna = id.split('-')[1]; // Obtener el número de columna
-  
-      // Encontrar la fila correspondiente en la tabla
-      var filaElemento = document.getElementById(fila);
-  
-      // Verificar si la fila existe
-      if (filaElemento) {
-        // Buscar la celda correspondiente en la fila
-        var celda = filaElemento.querySelector('#' + id);
-  
-        // Verificar si la celda existe
-        if (celda) {
-          // Si la celda existe, reemplazarla por una nueva celda con el mismo ID
-          var nuevaCelda = document.createElement('td');
-          nuevaCelda.id = id;
-          celda.parentNode.replaceChild(nuevaCelda, celda);
-        } else {
-          // Si la celda no existe, crear una nueva celda con el ID proporcionado
-          var nuevaCelda = document.createElement('td');
-          nuevaCelda.id = id;
-          filaElemento.appendChild(nuevaCelda);
+    celdasId.forEach(function (id) {
+        // Extraer información de fila y columna del id
+        var fila = id.split('-')[0].substring(1); // Obtener el número de fila
+        var columna = id.split('-')[1]; // Obtener el número de columna
+
+        // Encontrar la fila correspondiente en la tabla
+        var filaElemento = document.getElementById(fila);
+
+        // Verificar si la fila existe
+        if (filaElemento) {
+            // Buscar la celda correspondiente en la fila
+            var celda = filaElemento.querySelector('#' + id);
+
+            // Verificar si la celda existe
+            if (celda) {
+                // Si la celda existe, reemplazarla por una nueva celda con el mismo ID
+                var nuevaCelda = document.createElement('td');
+                nuevaCelda.id = id;
+                celda.parentNode.replaceChild(nuevaCelda, celda);
+            } else {
+                // Si la celda no existe, crear una nueva celda con el ID proporcionado
+                var nuevaCelda = document.createElement('td');
+                nuevaCelda.id = id;
+                filaElemento.appendChild(nuevaCelda);
+            }
+
+            // Obtener todas las celdas de la fila y ordenarlas
+            var celdas = Array.from(filaElemento.getElementsByTagName('td'));
+            celdas.sort(function (a, b) {
+                var numeroA = parseInt(a.id.split('-')[1]);
+                var numeroB = parseInt(b.id.split('-')[1]);
+                return numeroA - numeroB;
+            });
+
+            // Volver a agregar las celdas a la fila en el nuevo orden
+            celdas.forEach(function (celda) {
+                filaElemento.appendChild(celda);
+            });
         }
-  
-        // Obtener todas las celdas de la fila y ordenarlas
-        var celdas = Array.from(filaElemento.getElementsByTagName('td'));
-        celdas.sort(function(a, b) {
-          var numeroA = parseInt(a.id.split('-')[1]);
-          var numeroB = parseInt(b.id.split('-')[1]);
-          return numeroA - numeroB;
-        });
-  
-        // Volver a agregar las celdas a la fila en el nuevo orden
-        celdas.forEach(function(celda) {
-          filaElemento.appendChild(celda);
-        });
-      }
     });
-  }
+}
 
 function confirmarBorrarCurso() {
     const checkboxes = document.querySelectorAll('.infoCursos input[type="checkbox"]');
@@ -512,7 +512,7 @@ function descargarHorario() {
     }
     Swal.fire({
         title: 'Advertencia',
-        text: 'Luego de descargar el contenido se reiniciará',
+        text: 'q tenga buen dia',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Aceptar',
@@ -522,35 +522,44 @@ function descargarHorario() {
             console.log('Aceptar clicado');
             return;
         }
+        var elementosAOcultar = [];
         var numeroUltimoValor = parseInt(ultimoValor, 10);
         numeroUltimoValor += 1;
-        console.log(typeof numeroUltimoValor);
         for (var i = numeroUltimoValor; i <= 15; i++) {
             var elemento = document.getElementById(i.toString());
-            console.log('aaaaaaaaaaaa');
             if (elemento) {
-                elemento.style.display = 'none';
+                elementosAOcultar.push(elemento);
             }
         }
         if (!contieneSeisO7) {
-            // Ocultar elementos con IDs que contienen 'f6' o 'f7'
+            // Identificar elementos con IDs que contienen 'f6' o 'f7'
             for (var i = 6; i <= 7; i++) {
                 for (var j = 1; j <= 15; j++) {
                     var elemento = document.getElementById('f' + j + '-' + i);
                     if (elemento) {
-                        elemento.style.display = 'none';
+                        elementosAOcultar.push(elemento);
                     }
                 }
             }
-            var elemento = document.getElementById('s6');
-            if (elemento) {
-                elemento.style.display = 'none';
+            var elementoS6 = document.getElementById('s6');
+            var elementoD7 = document.getElementById('d7');
+            if (elementoS6) {
+                elementosAOcultar.push(elementoS6);
             }
-            var elemento = document.getElementById('d7');
-            if (elemento) {
-                elemento.style.display = 'none';
+            if (elementoD7) {
+                elementosAOcultar.push(elementoD7);
             }
         }
+        var estilosOriginales = [];
+        elementosAOcultar.forEach(function (elemento) {
+            estilosOriginales.push({
+                elemento: elemento,
+                displayStyle: elemento.style.display
+            });
+        });
+        elementosAOcultar.forEach(function (elemento) {
+            elemento.style.display = 'none';
+        });
 
         var anchoTabla = document.getElementById('miHorario').scrollWidth;
         var altoTabla = document.getElementById('miHorario').scrollHeight;
@@ -581,14 +590,19 @@ function descargarHorario() {
             enlaceDescarga.href = imagenURL;
 
             // Asignar el nombre del archivo
-            enlaceDescarga.download = 'horario_con_estilo.png';
+            enlaceDescarga.download = 'horario.png';
 
             // Simular un clic en el enlace para iniciar la descarga
             enlaceDescarga.click();
-            location.reload();
+
+            // Restaurar los estilos originales después de 3 segundos
+            setTimeout(function () {
+                estilosOriginales.forEach(function (estilo) {
+                    estilo.elemento.style.display = estilo.displayStyle;
+                });
+            }, 2000);
         });
     });
-
 
 }
 
