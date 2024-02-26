@@ -365,6 +365,19 @@ function actualizarCeldas(celdasId) {
           nuevaCelda.id = id;
           filaElemento.appendChild(nuevaCelda);
         }
+  
+        // Obtener todas las celdas de la fila y ordenarlas
+        var celdas = Array.from(filaElemento.getElementsByTagName('td'));
+        celdas.sort(function(a, b) {
+          var numeroA = parseInt(a.id.split('-')[1]);
+          var numeroB = parseInt(b.id.split('-')[1]);
+          return numeroA - numeroB;
+        });
+  
+        // Volver a agregar las celdas a la fila en el nuevo orden
+        celdas.forEach(function(celda) {
+          filaElemento.appendChild(celda);
+        });
       }
     });
   }
