@@ -707,9 +707,6 @@ td {
         display: flex;
         font-size: 11px !important;
     }
-    .toggle-detalles span {
-        padding-top: 4px;
-    }
     /*
     .detalles-content {
          align-items: start; 

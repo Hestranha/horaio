@@ -354,12 +354,13 @@ function borrarCurso() {
         }
     }
     //infoCursosContainer.innerHTML += `<p>Celdas: ${curso.celdas}</p>`;
-
+    /*
     ventanaEmergente.addEventListener('click', function (event) {
         if (event.target === ventanaEmergente) {
             cerrarVentanaEmergente();
         }
     });
+    */
     document.addEventListener('keydown', function (event) {
         if (event.key === 'Escape') {
             cerrarVentanaEmergente();
