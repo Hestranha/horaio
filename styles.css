@@ -69,7 +69,12 @@ button {
     overflow-x: auto;
     max-width: auto;
 }
-
+#horario-mostrado::-webkit-scrollbar-thumb {
+    background-color: #000000;
+}
+#horario-mostrado::-webkit-scrollbar-thumb:hover {
+    background-color: #8D20B7; 
+}
 .titulo {
     text-align: center;
 }
