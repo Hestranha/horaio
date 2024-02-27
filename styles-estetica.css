@@ -17,7 +17,6 @@
 
 /* Create a custom checkbox */
 .checkmark {
-    margin-left: 5px;
     --clr: #0d0b6e;
     position: relative;
     top: 0;
