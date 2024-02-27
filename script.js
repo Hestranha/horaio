@@ -187,9 +187,9 @@ function agregarCurso() {
                 // Actualizar el contenido de la celda con el nombre del curso
                 //console.log(` ${ultimaHoraMenorInicio} == ${horaInicio} &&  ${ultimaHoraMenorFin} == ${horaFin}`);
                 if (ultimaHoraMenorInicio == horaInicio && ultimaHoraMenorFin == horaFin) {
-                    celda.innerText = nombreCurso;
+                    celda.innerText = ordenarTexto(nombreCurso);
                 } else {
-                    celda.innerText = nombreCurso + '\n(' + horaInicio + '-' + horaFin + ')';
+                    celda.innerText = ordenarTexto(nombreCurso) + '\n(' + horaInicio + '-' + horaFin + ')';
                 }
 
                 celda.style.backgroundColor = colorSeleccionado;
@@ -235,24 +235,7 @@ function agregarCurso() {
     }
 
 }
-/*
-var cursos = {
-    curso1: {
-        id: 1,
-        nombre: "Curso 1",
-        celdas: 20,
-        dias: [1, 2],
-        hora: ["10:00 AM", "12:00 PM"]
-    },
-    curso2: {
-        id: 2,
-        nombre: "Curso 2",
-        celdas: 15,
-        dias: [3, 5],
-        hora: ["2:00 PM", "4:00 PM"]
-    }
-};
-*/
+
 function fusionarCeldasAutomaticamente(resultados) {
     // Obtener todas las filas afectadas
     var filasAfectadas = {};
@@ -290,6 +273,50 @@ function fusionarCeldas(celdas) {
         }
     }
 }
+
+function ordenarTexto(nombreCurso) {
+    let palabras = nombreCurso.split(/\s+/);
+
+    let resultado = palabras.map(palabra => {
+        let segmentos = [];
+        let currentSegment = '';
+
+        for (let i = 0; i < palabra.length; i++) {
+            if (currentSegment.length < 15) {
+                currentSegment += palabra[i];
+            } else {
+                segmentos.push(currentSegment);
+                currentSegment = palabra[i];
+            }
+        }
+
+        if (currentSegment.length > 0) {
+            segmentos.push(currentSegment);
+        }
+
+        return segmentos.join(' -');
+    });
+
+    return resultado.join(' ');
+}
+/*
+var cursos = {
+    curso1: {
+        id: 1,
+        nombre: "Curso 1",
+        celdas: 20,
+        dias: [1, 2],
+        hora: ["10:00 AM", "12:00 PM"]
+    },
+    curso2: {
+        id: 2,
+        nombre: "Curso 2",
+        celdas: 15,
+        dias: [3, 5],
+        hora: ["2:00 PM", "4:00 PM"]
+    }
+};
+*/
 //borrarCurso();
 function borrarCurso() {
     if (cursos.length == 0) {
@@ -693,12 +720,12 @@ function actualizarHorario() {
     });
 }
 /*
-⠀⠀⠀⠀⠀⠀⠀⢠⣿⣶⣄⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ 
-⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣦⣄⣀⡀⣠⣾⡇⠀⠀⠀⠀ 
-⠀⠀⠀⠀⠀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀ 
-⠀⠀⠀⢀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⢿⣿⣿⡇⠀⠀⠀⠀ 
-⣶⣿⣦⣜⣿⣿⣿⡟⠻⣿⣿⣿⣿⣿⣿⣿⡿⢿⡏⣴⣺⣦⣙⣿⣷⣄⠀⠀⠀ 
-⣯⡇⣻⣿⣿⣿⣿⣷⣾⣿⣬⣥⣭⣽⣿⣿⣧⣼⡇⣯⣇⣹⣿⣿⣿⣿⣧⠀⠀ 
-⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠸⣿⣿⣿⣿⣿⣿⣿⣷
+────▄───────────▄─────
+────█▌─────────▐█─────
+───▄█▌─────────▐█▄────
+───▀█▌───▄▄▄───▐█▀────
+────────█████─────────
+───▄▄▄───▀▀▀───▄▄▄────
+─────▀██▄▄▄▄▄██▀──────
 */
 
