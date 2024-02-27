@@ -312,7 +312,7 @@ function ordenarTexto(nombreCurso) {
 
     return resultado.join(' ');
 }
-
+/*
 var cursos = {
     curso1: {
         id: 1,
@@ -357,7 +357,7 @@ var cursos = {
         hora: ["2:00 PM", "4:00 PM"]
     }
 };
-borrarCurso();
+borrarCurso();*/
 function borrarCurso() {
     if (cursos.length == 0) {
         Swal.fire({
