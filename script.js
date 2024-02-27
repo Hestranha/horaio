@@ -52,18 +52,14 @@ function toggleDetalles() {
 //***************************************************************
 //***************************************************************
 function generarColorPastel() {
-    // Generar componentes de color RGB para un color pastel
     var r = Math.floor(Math.random() * 100) + 155; // Rojo en el rango 155-255
     var g = Math.floor(Math.random() * 100) + 155; // Verde en el rango 155-255
     var b = Math.floor(Math.random() * 100) + 155; // Azul en el rango 155-255
 
-    // Convertir componentes RGB a formato hexadecimal
     var colorHex = '#' + r.toString(16) + g.toString(16) + b.toString(16);
 
-    // Establecer el valor en el elemento de entrada de color
     var colorInput = document.getElementById('color');
     colorInput.value = colorHex;
-
 }
 var ultimoValor;
 var contieneSeisO7;
@@ -74,7 +70,6 @@ var estado = [];
 var verificarUltimaHora = '19:30'
 function agregarCurso() {
     idsCumplidos.splice(0, idsCumplidos.length);
-    // Obtener los valores del formulario
     const nombreCurso = document.getElementById('nombre-curso').value;
     const diasSeleccionados = obtenerDiasSeleccionados();
     const horaInicio = obtenerHora(document.getElementById('hora-inicio').value);
@@ -115,7 +110,6 @@ function agregarCurso() {
         // Obtener la hora de fin de la fila actual (asumiendo que está en el formato hh:mm)
         var horaFilaFin = filas[i].querySelector('th').innerText.split(' - ')[1];
         // Verificar si la hora de inicio o la hora de fin está dentro del rango
-
         if (horaFilaFin > horaInicio && horaFilaInicio <= horaFin) {
             //console.log(`horaFilaFin > horaInicio &&  horaFilaInicio <= horaFin`);
             //console.log(` ${horaFilaFin} > ${horaInicio} &&  ${horaFilaInicio} <= ${horaFin}`);
@@ -708,6 +702,15 @@ function descargarHorario() {
 }
 
 function actualizarHorario() {
+    if (cursos.length !== 0) {
+        Swal.fire({
+            title: 'what?',
+            text: 'no debe haber ningun curso',
+            icon: 'question',
+            confirmButtonText: 'Aceptar'
+        });
+        return;
+    }
     const horarioInicioInput = obtenerHora(document.getElementById('horario-inicio').value);
     const horarioIntervaloInput = parseInt(obtenerHora(document.getElementById('horario-intervalo').value));
 
