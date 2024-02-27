@@ -591,7 +591,6 @@ td {
 
 .toggle-detalles span {
     z-index: 10;
-    padding-top: 3px;
     transition: color 0.4s;
     color: black;
 }
@@ -708,7 +707,9 @@ td {
         display: flex;
         font-size: 11px !important;
     }
-
+    .toggle-detalles span {
+        padding-top: 4px;
+    }
     /*
     .detalles-content {
          align-items: start; 
