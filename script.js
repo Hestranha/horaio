@@ -67,7 +67,7 @@ var idsCumplidos = [];
 var cursos = [];
 let indice = 1;
 var estado = [];
-var verificarUltimaHora = '19:30'
+var verificarUltimaHora = '22:00'
 function agregarCurso() {
     idsCumplidos.splice(0, idsCumplidos.length);
     const nombreCurso = document.getElementById('nombre-curso').value;
