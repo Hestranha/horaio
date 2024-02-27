@@ -591,6 +591,7 @@ td {
 
 .toggle-detalles span {
     z-index: 10;
+    padding-bottom: 3px;
     transition: color 0.4s;
     color: black;
 }
