@@ -295,7 +295,7 @@ function ordenarTexto(nombreCurso) {
         let currentSegment = '';
 
         for (let i = 0; i < palabra.length; i++) {
-            if (currentSegment.length < 15) {
+            if (currentSegment.length < 18) {
                 currentSegment += palabra[i];
             } else {
                 segmentos.push(currentSegment);
@@ -312,7 +312,7 @@ function ordenarTexto(nombreCurso) {
 
     return resultado.join(' ');
 }
-/*
+
 var cursos = {
     curso1: {
         id: 1,
@@ -357,7 +357,7 @@ var cursos = {
         hora: ["2:00 PM", "4:00 PM"]
     }
 };
-borrarCurso();*/
+borrarCurso();
 function borrarCurso() {
     if (cursos.length == 0) {
         Swal.fire({
@@ -405,7 +405,7 @@ function borrarCurso() {
                 if (labelCurso) {
                     labelCurso.style.backgroundColor = this.checked ? '#1614a5' : 'white';
                     labelCurso.style.border = this.checked ? '1px solid #1614a5' : '1px solid white';
-                    // labelCurso.style.color = this.checked ? 'white' : 'black';
+                    labelCurso.style.color = this.checked ? 'white' : 'black';
                     labelCursoH2.style.color = this.checked ? 'white' : 'black';
                 }
             });
@@ -620,7 +620,7 @@ function descargarHorario() {
         var elementosAOcultar = [];
         var numeroUltimoValor = parseInt(ultimoValor, 10);
         numeroUltimoValor += 1;
-        for (var i = numeroUltimoValor; i <= 15; i++) {
+        for (var i = numeroUltimoValor; i <= 18; i++) {
             var elemento = document.getElementById(i.toString());
             if (elemento) {
                 elementosAOcultar.push(elemento);
@@ -629,7 +629,7 @@ function descargarHorario() {
         if (!contieneSeisO7) {
             // Identificar elementos con IDs que contienen 'f6' o 'f7'
             for (var i = 6; i <= 7; i++) {
-                for (var j = 1; j <= 15; j++) {
+                for (var j = 1; j <= 18; j++) {
                     var elemento = document.getElementById('f' + j + '-' + i);
                     if (elemento) {
                         elementosAOcultar.push(elemento);
@@ -733,7 +733,7 @@ function actualizarHorario() {
     var tiempoIntervalo = [];
 
     // Calcular y agregar intervalos al array
-    for (var i = 0; i < 15; i++) {
+    for (var i = 0; i < 18; i++) {
         // Clonar la fecha de inicio
         var nuevaFecha = new Date(fechaInicio);
 
