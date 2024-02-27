@@ -3,19 +3,38 @@ generarColorPastel();
 //***************************************************************
 //***************************************************************
 //***************************************************************
-// referencia al checkbox "borrarTodos"
-var checkboxBorrarTodos = document.getElementById('borrarTodos');
-// detallesContent.style.display = 'none';
-// Agrega un evento de cambio al checkbox "borrarTodos"
-checkboxBorrarTodos.addEventListener('change', function () {
-    // Obtén todos los checkboxes dentro de .infoCursos
-    var checkboxesInfoCursos = document.querySelectorAll('.infoCursos input[type="checkbox"]');
+function actualizarBorrarTodosCheckbox() {
+    const borrarTodosCheckbox = document.getElementById('borrarTodos');
+    const checkboxes = document.querySelectorAll('.container-curso input[type="checkbox"]');
 
-    // Recorre todos los checkboxes y establece su propiedad checked según el estado del checkbox "borrarTodos"
-    checkboxesInfoCursos.forEach(function (checkbox) {
-        checkbox.checked = checkboxBorrarTodos.checked;
+    function actualizarBorrarTodos(aux) {
+        if (aux == 0) {
+            const todosMarcados = Array.from(checkboxes).every(checkbox => checkbox.checked);
+            borrarTodosCheckbox.checked = todosMarcados;
+            //const checkboxesMarcados = Array.from(checkboxes).filter(checkbox => checkbox.checked);
+            //console.log('Checkboxes Marcados:', checkboxesMarcados.map(checkbox => checkbox.value));
+            //console.log('Comprobando ');
+        } else if (aux == 1) {
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = !checkbox.checked; // Alternar entre marcar y desmarcar uno por uno
+                const event = new Event('change');
+                checkbox.dispatchEvent(event);
+            });
+            console.log('Marcando todos');
+        }
+    }
+
+    borrarTodosCheckbox.addEventListener('click', function () {
+        actualizarBorrarTodos(1);
     });
-});
+
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            actualizarBorrarTodos(0);
+        });
+    });
+}
+
 //***************************************************************
 //***************************************************************
 function toggleDetalles() {
@@ -314,10 +333,37 @@ var cursos = {
         celdas: 15,
         dias: [3, 5],
         hora: ["2:00 PM", "4:00 PM"]
+    },
+    curso3: {
+        id: 3,
+        nombre: "Curso 3",
+        celdas: 12,
+        dias: [4, 5],
+        hora: ["10:00 AM", "12:00 PM"]
+    },
+    curso4: {
+        id: 4,
+        nombre: "Curso 4",
+        celdas: 15,
+        dias: [1, 6],
+        hora: ["2:00 PM", "4:00 PM"]
+    },
+    curso5: {
+        id: 5,
+        nombre: "Curso 5",
+        celdas: 20,
+        dias: [1, 2],
+        hora: ["10:00 AM", "12:00 PM"]
+    },
+    curso6: {
+        id: 6,
+        nombre: "Curso 6",
+        celdas: 15,
+        dias: [3, 5],
+        hora: ["2:00 PM", "4:00 PM"]
     }
 };
-*/
-//borrarCurso();
+borrarCurso();*/
 function borrarCurso() {
     if (cursos.length == 0) {
         Swal.fire({
@@ -333,26 +379,45 @@ function borrarCurso() {
     document.body.style.overflow = 'hidden';
     let infoCursosContainer = document.getElementById("infoCursos");
     infoCursosContainer.innerHTML = "";
-    const nombresDias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+    const nombresDias = ['L', 'M', 'W', 'J', 'V', 'S', 'D'];
 
     for (let key in cursos) {
         let curso = cursos[key];
         if (cursos.hasOwnProperty(key)) {
             // Obtener nombres de días en lugar de números
             let nombresDiasSeleccionados = curso.dias.map(dia => nombresDias[dia - 1]);
-
+            /**
+             * id="checkbox-${curso.id}" estoy agreando esto en el input
+             * ya que me ayudara a pintar todo el label de un color en 
+             * especifico si deja de funcionar el codigo simplemente
+             * borrar ese atributo
+             */
             infoCursosContainer.innerHTML += `
-            <div class="container-curso">
-                <h2 class="m-nombre-curso">- ${curso.nombre}</h2>
+            <label class="container-curso">
+                <input class="borrar-checkbox-a" type="checkbox" id="checkbox-${curso.id}" value="${curso.id}"/>
+                <h2 class="m-nombre-curso">${curso.nombre}</h2>
                 <p>Duración: ${curso.hora[0]} - ${curso.hora[1]}</p>
                 <p>Días: ${nombresDiasSeleccionados.join(', ')}</p>
-                <div class="xd">
-                    <input class="borrar-checkbox" type="checkbox" value="${curso.id}"/>
-                </div>
-            </div><hr>
+            </label>
+            <hr>
             `;
         }
+        const checkboxes = document.querySelectorAll('.borrar-checkbox-a');
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                const labelCurso = this.closest('.container-curso');
+                const labelCursoH2 = labelCurso.querySelector('h2');
+                if (labelCurso) {
+                    labelCurso.style.backgroundColor = this.checked ? '#1614a5' : 'white';
+                    labelCurso.style.border = this.checked ? '1px solid #1614a5' : '1px solid white';
+                    // labelCurso.style.color = this.checked ? 'white' : 'black';
+                    labelCursoH2.style.color = this.checked ? 'white' : 'black';
+                }
+            });
+        });
     }
+    actualizarBorrarTodosCheckbox();
     //infoCursosContainer.innerHTML += `<p>Celdas: ${curso.celdas}</p>`;
     /*
     ventanaEmergente.addEventListener('click', function (event) {
@@ -423,7 +488,7 @@ function confirmarBorrarCurso() {
     let cursosSeleccionados = Array.from(checkboxes)
         .filter(checkbox => checkbox.checked)
         .map(checkbox => checkbox.value);
-    //console.log(cursosSeleccionados);
+    console.log(cursosSeleccionados);
     if (cursosSeleccionados.length > 0) {
         for (let i = 0; i < cursosSeleccionados.length; i++) {
             let cursoId = cursosSeleccionados[i];

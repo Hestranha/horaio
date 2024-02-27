@@ -109,18 +109,21 @@
       <div id="ventanaEmergente" class="modal">
         <div class="modal-contenido">
             <div class="botones-ajustes">
-                <div class="seleccion">
-                  <p>todos</p>
-                  <input class="borrar-checkbox" type="checkbox" id="borrarTodos" required />
+                <div class="seleccion customCheckBoxHolder">
+                    <input class="borrar-checkbox customCheckBoxInput" type="checkbox" id="borrarTodos" required />
+                    <label for="borrarTodos" class="customCheckBoxWrapper">
+                        <div class="customCheckBox">
+                            <div class="inner">todos</div>
+                        </div>
+                    </label>
                 </div>
                 <div class="opciones-botones">
-                  <button class="confirmarBorrarCurso" type="button" onclick="confirmarBorrarCurso()">Borrar</button>
-                  <button class="cerrarBorrarCurso" onclick="cerrarVentanaEmergente()">Salir</button>
+                  <button class="confirmarBorrarCurso btn-ajustes" type="button" onclick="confirmarBorrarCurso()">Borrar</button>
+                  <button class="cerrarBorrarCurso btn-ajustes" onclick="cerrarVentanaEmergente()">Salir</button>
                 </div>
-                
             </div>
             <hr>
-          <div class="cursos-borrar infoCursos" id="infoCursos"></div>
+            <div class="cursos-borrar infoCursos" id="infoCursos"></div>
         </div>
       </div>
       <div id="horario-mostrado">

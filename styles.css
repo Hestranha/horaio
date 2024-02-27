@@ -3,6 +3,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
+    user-select: none;
 }
 .qweasd{
     width: 100%;
@@ -288,7 +289,6 @@ td {
 /*************************/
 /*************************/
 /*************************/
-/* Estilos para la ventana emergente */
 .modal {
     display: none;
     position: fixed;
@@ -305,37 +305,82 @@ td {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 30%;
+    width: 40%;
     transform: translate(-50%, -50%);
-    overflow-y: auto;
-    height: 80vh;
+    /* overflow-y: auto; */
+    overflow: hidden;
+    height: 80%;
     background-color: #fff;
-    padding: 20px;
+    padding: 20px 0px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+.modal-contenido hr{
+    color: black;
+    width: 100%;
+    margin: 0px;
+    margin-bottom: 4px;
+} 
+.cursos-borrar {
+    display: flex;
+    flex-direction: column;
+    height: 93%;
+    width: 100%;
+    /* padding: 20px; */
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+.cursos-borrar hr{
+    color: black;
+    width: 100%;
+    margin: 0px;
+} 
+.container-curso {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    background-color: #ffffff;
+    align-items: center;
+    border: 1px solid rgb(255, 255, 255);
+    flex-direction: column;
+    padding: 10px 0px;
+    transition: background-color 0.3s;
+}
+.container-curso h2 {
+    color: black;
+    font-size: 20px;
+    margin-bottom: 8px;
+    text-shadow: 1px 1px 1px rgb(134, 134, 134);
+    transition: color 0.3s;
+}
+.container-curso p {
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.582);
+    padding: 10px;
+    margin: 5px;
+    text-align: center;
+    font-size: 16px;
+    /* line-height: 1.4; */
 }
 
 .m-nombre-curso {
     font-size: 20px;
-    color: #333;
+    color: #000000;
     margin: 0px;
 }
 
-.xd {
-    display: flex;
-    justify-content: end;
-}
-
 .borrar-checkbox {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
 }
 
-.container-curso {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    padding: 10px 0px;
+.borrar-checkbox-a{
+    outline: none;
+    width: 0px;
+    height: 0px;
 }
 
 /*************************/
@@ -448,7 +493,10 @@ td {
 }
 
 .botones-ajustes {
+    padding: 0px 20px;
+    padding-bottom: 10px;
     display: flex;
+    height: 7%;
     flex-direction: wrap;
     justify-content: space-between;
 }
@@ -467,7 +515,7 @@ td {
 }
 
 .cerrarBorrarCurso:hover {
-    background-color: #2796a5;
+    background-color: #3c39ff;
 }
 
 .confirmarBorrarCurso {
@@ -475,7 +523,6 @@ td {
     justify-content: flex-end;
     padding: 10px 20px;
     font-size: 16px;
-    background-color: #ce3232;
     color: white;
     border: none;
     border-radius: 5px;
@@ -500,7 +547,7 @@ td {
 }
 
 .confirmarBorrarCurso:hover {
-    background-color: #a52727;
+    background-color: #ff2d2d;
 }
 
 /*************************/
@@ -719,8 +766,18 @@ td {
 .container-hora input:hover:not(:focus-within),
 /* .container-color input:hover:not(:focus-within), */
 .container-a div:hover:not(:focus-within) {
-    background-color: #a2b3ff !important;
-    border: 1px solid #a2b3ff;
+    background-color: #5976f7 !important;
+    border: 1px solid #000e4e;
+}
+
+.cursos-borrar label{
+    transition: background-color 0.5s ease-in-out;
+}
+
+
+.cursos-borrar label:hover:not(:focus-within){
+    background-color: #5976f7 !important;
+    border: 1px solid #000e4e;
 }
 
 #miHorario td {
