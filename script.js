@@ -77,6 +77,18 @@ function agregarCurso() {
     const horaFin = obtenerHora(document.getElementById('hora-fin').value);
     var colorSeleccionado = document.getElementById('color').value;
     var checkbox = document.getElementById('fusionar-celdas');
+    if (nombreCurso == '' && diasSeleccionados.length == 0 && horaInicio == '' && horaFin == '') {
+        Swal.fire({
+            title: 'Datos incompletos',
+            text: 'Debe llenar la información de un curso',
+            icon: 'warning',
+            confirmButtonText: 'Aceptar'
+        });
+        return 0;
+    }
+    if (validacion() == 0) {
+        return;
+    }
     if (horaInicio >= verificarUltimaHora) {
         Swal.fire({
             title: 'Límite superado',
@@ -93,18 +105,6 @@ function agregarCurso() {
             icon: 'error',
             confirmButtonText: 'Aceptar'
         });
-        return;
-    }
-    if (nombreCurso == '' && diasSeleccionados.length == 0 && horaInicio == '' && horaFin == '') {
-        Swal.fire({
-            title: 'Datos incompletos',
-            text: 'Debe llenar la información de un curso',
-            icon: 'warning',
-            confirmButtonText: 'Aceptar'
-        });
-        return 0;
-    }
-    if (validacion() == 0) {
         return;
     }
     generarColorPastel();
