@@ -68,6 +68,7 @@ var cursos = [];
 let indice = 1;
 var estado = [];
 var verificarUltimaHora = '22:00'
+var verificarPrimeraHora = '07:00'
 function agregarCurso() {
     idsCumplidos.splice(0, idsCumplidos.length);
     const nombreCurso = document.getElementById('nombre-curso').value;
@@ -79,7 +80,16 @@ function agregarCurso() {
     if (horaInicio >= verificarUltimaHora) {
         Swal.fire({
             title: 'Límite superado',
-            text: 'La hora inicio es mayor a la hora final',
+            text: 'La hora inicio es mayor a la hora final del horario',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+        });
+        return;
+    }
+    if (horaInicio < verificarPrimeraHora) {
+        Swal.fire({
+            title: 'Límite superado',
+            text: 'La hora inicio es menor a la hora inicial del horario',
             icon: 'error',
             confirmButtonText: 'Aceptar'
         });
@@ -781,6 +791,10 @@ function actualizarHorario() {
     const partes = ultimaHoraFila.split(' - ');
     verificarUltimaHora = partes[1];
     //console.log(verificarUltimaHora);
+    primeraHoraFila = tiempoIntervalo[0];
+    const partes2 = primeraHoraFila.split(' - ');
+    verificarPrimeraHora = partes2[0];
+    //console.log(verificarPrimeraHora);
     Swal.fire({
         title: 'Listo',
         text: 'Se actualizó el horario exitosamente',
@@ -789,12 +803,7 @@ function actualizarHorario() {
     });
 }
 /*
-────▄───────────▄─────
-────█▌─────────▐█─────
-───▄█▌─────────▐█▄────
-───▀█▌───▄▄▄───▐█▀────
-────────█████─────────
-───▄▄▄───▀▀▀───▄▄▄────
-─────▀██▄▄▄▄▄██▀──────
+|_  _  __|_.__.._ |_  _  
+| |(/__> |_|(_|| || |(_) 
 */
 
