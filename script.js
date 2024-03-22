@@ -77,6 +77,7 @@ function agregarCurso() {
     const horaFin = obtenerHora(document.getElementById('hora-fin').value);
     var colorSeleccionado = document.getElementById('color').value;
     var checkbox = document.getElementById('fusionar-celdas');
+    var checkbox2 = document.getElementById('mostrar-hora');
     if (nombreCurso == '' && diasSeleccionados.length == 0 && horaInicio == '' && horaFin == '') {
         Swal.fire({
             title: 'Datos incompletos',
@@ -209,7 +210,9 @@ function agregarCurso() {
             if (celda) {
                 // Actualizar el contenido de la celda con el nombre del curso
                 //console.log(` ${ultimaHoraMenorInicio} == ${horaInicio} &&  ${ultimaHoraMenorFin} == ${horaFin}`);
-                if (ultimaHoraMenorInicio == horaInicio && ultimaHoraMenorFin == horaFin) {
+                if(checkbox2.checked){
+                    celda.innerText = ordenarTexto(nombreCurso) + '\n(' + horaInicio + '-' + horaFin + ')';
+                } else if (ultimaHoraMenorInicio == horaInicio && ultimaHoraMenorFin == horaFin) {
                     celda.innerText = ordenarTexto(nombreCurso);
                 } else {
                     celda.innerText = ordenarTexto(nombreCurso) + '\n(' + horaInicio + '-' + horaFin + ')';
